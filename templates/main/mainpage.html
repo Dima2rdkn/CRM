@@ -1,0 +1,37 @@
+{% extends "main.html" %}
+{% block title %} Цветы Мамайка - Главная {% endblock %}
+{% block subheader %}
+    <h4>Главная</h4>
+{% endblock %}
+{% block vnavbar %}
+    <ul>
+        {% url "references" as page_url %}
+        <li>
+            <a href="/references/" {% if page_url == current_url %}
+               class="current" {% endif %}> Справочники</a>
+        </li>
+        {% url "documents" as page_url %}
+        <li>
+            <a href="/documents/" {% if page_url == current_url %}
+               class="current" {% endif %}>Документы</a>
+        </li>
+        {% url "reports" as page_url %}
+        <li>
+            <a href="#" {% if page_url == current_url %}
+               class="current" {% endif %}>Отчеты</a>
+        </li>
+        {% if request.user.is_authenticated %}
+            <li class="indented">
+                <a href="{% url 'admin:index' %}">Админка</a>
+            </li>
+            <li class="indented">
+                <a href="{% url 'logout' %}">Выход</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+{% block main %}
+    <h2> Торговля, склад, CRM в облаке </h2>
+    <p>Все что нужно — в одной системе: продажи, закупки, склад, финансы,
+        клиенты и поставщики</p>
+{% endblock %}

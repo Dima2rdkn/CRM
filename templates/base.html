@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Цветы Мамайка{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link type="text/css" href="{% static "/css/base.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<header>
+    <span class="logo"> Цветы Мамайка </span>
+    <span class="user">
+        {% if request.user.is_authenticated %}
+            {{ request.user.first_name }}
+            <a href="{% url "logout" %}">Выход</a>
+        {% else %}
+            <a href="{% url "login" %}">Войти</a>
+        {% endif %}
+    </span>
+    <span class="avatar">
+        <img src="{% static "img/no-avatar.png" %}" height="20" width="20">
+    </span>
+</header>
+{% if messages %}
+<article>
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                {{ message|safe }}
+                <a href="#" class="close">x</a>
+            </li>
+        {% endfor %}
+    </ul>
+</article>
+{% endif %}
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+<!---
+<footer>
+    <p> (С)2020 D2RDKN-Studio Все права защищены.</p>
+</footer>
+-->
+</body>
+</html>

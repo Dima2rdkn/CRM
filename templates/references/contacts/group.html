@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    {% if group %}{{ group.title }}{% else %} Новая группа {% endif %}
+{% endblock %}
+{% block subheader %}
+    <h3 class="refname">Группы товаров</h3>
+    <button name="Edit" form="form_group_edit"> Записать</button>
+    <button name="Close" form="form_group_edit"> Закрыть</button>
+    <p class="separator"></p>
+    <button name="Delete" form="form_group_edit"> Удалить</button>
+{% endblock %}
+{% block main %}
+    {% if error == 1 %}
+        <h2> Сначала удалите или перенесите товары из этой категории!</h2>
+        <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
+    {% else %}
+        <form id="form_group_edit" action="." method="post">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "main.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Клиенты {% endblock %}
+{% block subheader %}
+    <span class="form-group">
+        <h3> Справочник Клиенты </h3>
+    </span>
+<!--    Группа горизонтальных кнопок
+        Передумал, но может пригодятся.
+        Решил сделать на примере Mail.ru
+    <span class="form-group"> Справочник Клиенты </span>
+    <span class="form-group">
+        <form action="{% url "contacts_group_new" %}">
+        <button class="btn btn-oval"> +Группа</button>
+        </form>
+    </span>
+    <span class="form-group">
+        </form>
+        <form action="{% url "contact_new" %}">
+            <button class="btn btn-oval"> +Клиент</button>
+        </form>
+    </span>
+    -->
+    <span class="form-group" style = "margin-left: 20px">
+            <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
+    </span>
+
+{% endblock %}
+
+{% block vnavbar %}
+    <h4>Группы</h4>
+    <ul>
+         <li class="selected">
+             <a href="{% url "contacts" %}">
+                {% if group %}{{ group.title }}{% else %} Все {% endif %}</a>
+             <ul>
+                {% for g in groups %}
+                    {% if g.parent == group %}
+                        <li>
+                            <a href="{{ g.get_absolute_url }}">{{ g.title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+             </ul>
+         </li>
+    </ul>
+    <a href="{% url "contacts_group_new" %}">+Добавить группу</a>
+{% endblock %}
+{% block main %}
+    {% if group %}
+        <h4>{{ group.title }}</h4>
+        <p>{{ group.description }}</p>
+    {% else %}
+        <h4> Клиенты </h4>
+    {% endif %}
+    {% for a in contacts %}
+        <div class="item">
+            <a href="{{ a.get_absolute_url }}">
+                <img class="img-preview" src="{% if a.image %}{{ a.image.url }}
+            {% else %}{% static "img/no-image.png" %}{% endif %}
+                     width="50"
+                     alt="[x]">
+            </a>
+            <a href="{{ a.get_absolute_url }}">{{ a.title }}</a>
+        </div>
+    {% endfor %}
+    <div class="item">
+        <a href="{% url "contact_new" %}">+Добавить контакт</a>
+    </div>
+{% endblock %}

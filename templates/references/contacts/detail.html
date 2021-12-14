@@ -1,0 +1,47 @@
+{% extends "main.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Клиенты {% endblock %}
+{% block subheader %}
+    <span class="form-group" style = "margin-left: 20px">
+            <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
+    </span>
+{% endblock %}
+
+{% block detail %}
+    <div>
+        <img class="img-preview" src="{% if a.image %}{{ a.image.url }}
+            {% else %}{% static "img/no-image.png" %}{% endif %}
+                     width="100"
+                     alt="[x]">
+        </a>
+    </div>
+    <div>
+        <h3>{{ contact.first_name }}</h3>
+    </div>
+    <div>
+        <h3>{{ contact.last_name }}</h3>
+    </div>
+    <div>
+        <h3>{{ contact.description }}</h3>
+    </div>
+    <div>
+        <h3>{{ contact.email }}</h3>
+    </div>
+    <div>
+        <h3>{{ contact.phone }}</h3>
+        <h3>{{ contact.phone2 }}</h3>
+    </div>
+    <div>
+        <h3>{{ contact.messenger }}</h3>
+    </div>
+    <div>
+        <h3>{{ contact.address }}</h3>
+    </div>
+    <div>
+        <h3>Системная информация:</h3>
+        <p>Автор: {{ contact.createdBy }}</p>
+        <p>Дата: {{ contact.createdOn }}</p>
+        <p>Дата: {{ contact.isActive }}</p>
+    </div>
+
+{% endblock %}

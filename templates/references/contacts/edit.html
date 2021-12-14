@@ -1,0 +1,94 @@
+{% extends "onepage.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    {% if contact %}{{ contact.title }}{% else %}Цветы Мамайка - Новый клиент {% endif %}
+{% endblock %}
+{% block subheader %}
+    <span class="form-group" style = "margin-left: 20px">
+        <h2 class="refname">Клиенты </h2>
+    </span>
+
+    <span class="form-group" style = "margin-left: 20px">
+            <button class="btn btn-oval" name="Edit" form="form_contact_edit"> Записать</button>
+    </span>
+    <span class="form-group">
+            <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
+    </span>
+    <span class="form-group">
+           <p class="separator"></p>
+    </span>
+    {% if contact %}
+    <span class="form-group">
+         <button class="btn btn-oval" name="Delete" form="form_contact_edit"> Удалить</button>
+    </span>
+    {% endif %}
+
+{% endblock %}
+
+{% block main %}
+        {% if error == 1 %}
+            <div class="container-fluid">
+                <div class="card border-0 shadow p-3 my-5">
+                    <div class="card-header bg-alert text-white"">
+                        <h3>Ошибка:</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <h2> Сначала удалите все записи, ссылающиеся на этот товар</h2>
+                        <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="container-fluid">
+                <!-- Main Content Here -->
+                <div class="card border-0 shadow p-3 my-5">
+                    <div class="card-header bg-success text-white"">
+                        <h3>Клиент:</h3>
+                    </div>
+                    <div class="card-body p-0">
+
+                        <form id="form_contact_edit" action="." method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                               <div class="col">
+                                   {{ form.category|as_crispy_field }}
+                               </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.first_name|as_crispy_field }}
+                                </div>
+                                <div class="col">
+                                   {{ form.last_name|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.phone|as_crispy_field }}
+                                </div>
+                                <div class="col">
+                                    {{ form.phone2|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.messenger|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.email|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.address|as_crispy_field }}
+                                </div>
+                            </div>
+                            <hr>
+                        </form>
+                    </div>
+                </div>
+            </div>
+       {% endif %}
+{% endblock %}
