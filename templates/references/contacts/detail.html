@@ -9,7 +9,7 @@
 
 {% block detail %}
     <div>
-        <img class="img-preview" src="{% if a.image %}{{ a.image.url }}
+        <a><img class="img-preview" src="{% if a.image %} {{ a.image.url }}
             {% else %}{% static "img/no-image.png" %}{% endif %}
                      width="100"
                      alt="[x]">

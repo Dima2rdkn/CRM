@@ -1,28 +1,29 @@
 {% extends "main.html" %}
 {% block title %} Цветы Мамайка - Справочники {% endblock %}
+{% block subheader %}
+    <h5> Настройка и работа со справочниками </h5>
+{% endblock %}
 {% block vnavbar %}
     <ul>
         <li>
-            <a href="/main/" >Главная</a>
+            <a href="{% url 'references' %}" ><i class="fa-solid fa-house"></i> Главная</a>
         </li>
         <li>
-            <a href="contacts/">Клиенты</a>
+            <a href="{% url 'clients' %}"><i class="fa-solid fa-address-card"></i> Клиенты</a>
         </li>
         <li>
-            <a href="articles/">Товары и услуги</a>
+            <a href="{% url 'references' %}"><i class="fa-solid fa-basket-shopping"></i></i> Товары и услуги</a>
         </li>
         <li>
-            <a href="suppliers/">Поставщики</a>
+            <a href="{% url 'references' %}"><i class="fa-solid fa-truck"></i> Поставщики</a>
         </li>
         <li>
-            <a href="measure/">Единицы измерения</a>
+            <a href="{% url 'references' %}"><i class="fa-solid fa-scale-balanced"></i> Единицы измерения</a>
         </li>
         <li>
-            <a href="stocks/">Склады</a>
+            <a href="{% url 'references' %}"><i class="fa-solid fa-cubes-stacked"></i> Склады</a>
         </li>
     </ul>
 {% endblock %}
-{% block main %}
-    <h2> Настройка и работа со справочниками </h2>
-{% endblock %}
+
 

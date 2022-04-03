@@ -18,11 +18,11 @@ class ContactCreateForm(forms.ModelForm):
         fields = '__all__'
 
     image = forms.ImageField(label='Фото:')
-    category =forms.ModelChoiceField(label='Группа:', queryset=ContactGroup.objects.all())
+    category = forms.ModelChoiceField(label='Группа:', queryset=ContactGroup.objects.all())
     first_name = forms.CharField(label='Имя:', widget=forms.TextInput(attrs={'placeholder': 'Имя'}),
-                                 required=True)
+                                 required=True, max_length=100)
     last_name = forms.CharField(label='Фамилия:', widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}),
-                                required=False)
+                                required=False, max_length=200)
     email = forms.EmailField(label='Почта:', widget=forms.TextInput(attrs={'placeholder': 'name@domain.ru'}),
                              required=False)
     phone = forms.CharField(label='Телефон:', widget=forms.TextInput(attrs={'placeholder': '+79999999999'}))
