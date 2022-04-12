@@ -1,0 +1,20 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Клиенты
+{% endblock %}
+{% block subheader %}
+    <span class="form-group">
+        <h5> Группа клиентов </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'contact_groups_edit' %}" class="btn-view">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <h5>"{{ object }}"</h5>
+    <form method="post">
+        {% csrf_token %}
+        <div><button class="btn btn-success" type="submit">Удалить группу</button></div>
+    </form>
+{% endblock %}

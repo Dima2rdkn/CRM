@@ -5,66 +5,43 @@
     <span class="form-group">
         <h5> Справочник Клиенты </h5>
     </span>
-<!--    Группа горизонтальных кнопок
-        Передумал, но может пригодятся.
-        Решил сделать на примере Mail.ru
-    <span class="form-group"> Справочник Клиенты </span>
-    <span class="form-group">
-        <form action="{% url "contacts_group_new" %}">
-        <button class="btn btn-oval"> +Группа</button>
-        </form>
-    </span>
-    <span class="form-group">
-        </form>
-        <form action="{% url "contact_new" %}">
-            <button class="btn btn-oval"> +Клиент</button>
-        </form>
-    </span>
-    -->
-    <span class="form-group" style = "margin-left: 20px">
-            <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
-    </span>
+    <p class="separator"></p>
+    <a href="{% url 'references' %}" class="btn-view">Закрыть</a>
 
 {% endblock %}
 
 {% block vnavbar %}
-    <h4>Группы</h4>
+    <span class="form-group"> <h5>Группы</h5> </span>
+    <span class="form-group"> <a href="{% url 'contact_groups_edit' %}"><i class="fa-solid fa-pen-to-square"></i></a> </span>
     <ul>
-         <li class="selected">
-             <a href="{% url "clients" %}">
-                {% if group %}{{ group.title }}{% else %} Все {% endif %}</a>
-             <ul>
-                {% for g in groups %}
-                    {% if g.parent == group %}
-                        <li>
-                            <a href="{{ g.get_absolute_url }}">{{ g.title }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-             </ul>
-         </li>
+        {% if group %}
+             <li><a href="{% url "contacts" %}">Все</a></li>
+        {% endif %}
+        {% for g in groups %}
+            {% if g.parent == group %}
+                <li>
+                    <a href="{{ g.get_absolute_url }}">{{ g.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
     </ul>
-    <a href="{% url "contacts_group_new" %}">+Добавить группу</a>
 {% endblock %}
 {% block main %}
     {% if group %}
-        <h4>{{ group.title }}</h4>
+        <h5>{{ group.title }}</h5>
         <p>{{ group.description }}</p>
     {% else %}
-        <h4> Клиенты </h4>
+        <h5> Клиенты </h5>
     {% endif %}
     {% for a in contacts %}
         <div class="item">
-            <a href="{{ a.get_absolute_url }}">
+            <a href="#">
                 <img class="img-preview" src="{% if a.image %}{{ a.image.url }}
                 {% else %}{% static "img/no-image.png" %}{% endif %}"
                      width="100"
                      alt="[X]">
             </a>
-            <a href="{{ a.get_absolute_url }}">{{ a }}</a>
+            <a href="#">{{ a }}</a>
         </div>
     {% endfor %}
-    <div class="item">
-        <a href="{% url "contact_new" %}">+Добавить контакт</a>
-    </div>
 {% endblock %}

@@ -52,7 +52,7 @@
                             {% csrf_token %}
                             <div class="form-row">
                                 <div>
-                                    {{ form.category|as_crispy_field }}
+                                    {{ form.category}}
                                 </div>
                             </div>
                             <div class="form-row">
@@ -63,28 +63,28 @@
                             </div>
                             <div class="form-row">
                                 <div class="mb-3">
-                                    {{ form.first_name|as_crispy_field }}
+                                    {{ form.first_name }}
                                 </div>
                                 <div class="mb-3">
-                                    {{ form.last_name|as_crispy_field }}
+                                    {{ form.last_name }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div>
-                                    {{ form.messenger|as_crispy_field }}
+                                    {{ form.messenger }}
                                  </div>
                                 <div>
-                                    {{ form.phone|as_crispy_field }}
+                                    {{ form.phone }}
                                 </div>
                                 <div>
-                                    {{ form.phone2|as_crispy_field }}
+                                    {{ form.phone2 }}
                                 </div>
                             </div>
                             <div class="form-row">
-                                {{ form.email|as_crispy_field }}
+                                {{ form.email }}
                             </div>
                             <div class="form-row">
-                                 {{ form.address|as_crispy_field }}
+                                 {{ form.address }}
                             </div>
                             <hr>
                         </form>

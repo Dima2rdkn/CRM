@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.references, name='references'),
-    path('clients/', include('references.contacts.urls')),
+    path('contacts/', include('references.contacts.urls')),
 ]

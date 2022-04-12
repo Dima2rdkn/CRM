@@ -61,6 +61,7 @@ footer p {
     height: 80vh;
     border-right: 5px #1cdf78 solid;
 }
+
 #vnavbar ul {
     list-style: none;
 }
@@ -81,15 +82,21 @@ footer p {
 
 
 #main {
-    float: left;
-    width: 80%;
-    padding: 10px;
-    overflow: auto;
+    overflow: auto; /* Добавляем полосы прокрутки */
+    width: 80%; /* Ширина блока */
+    height: 80vh; /* Высота блока */
+    padding: 5px; /* Поля вокруг текста */
 }
-
+#onepage{
+    overflow: auto; /* Добавляем полосы прокрутки */
+    width: 100%; /* Ширина блока */
+    height: 80vh; /* Высота блока */
+    padding: 5px; /* Поля вокруг текста */
+}
 #subheader {
+    text-align: center;
     color: #cc0033;
-    padding: 10px 21%;
+    padding: 10px 10px;
     height: 50px;
     font-size: 14px;
     background: #bbffbb;
@@ -100,8 +107,16 @@ footer p {
     font-size: 16px;
 }
 
+.separator{
+    display: inline-block;
+    margin-right:20px;
+}
 .form-group{
     display: inline-block;
+}
+
+.form-group a{
+    color: #12c064;
 }
 
 .btn-oval {
@@ -140,4 +155,49 @@ footer p {
 /* Center Button */
 .btn-oval {
   margin: auto;
+}
+
+.btn-view {
+    display: inline-block; /* Строчно-блочный элемент */
+    padding: 5px 20px; /* Добавляем поля */
+    text-decoration: none; /* Убираем подчёркивание у ссылки */
+    cursor: pointer; /* Курсор в виде руки */
+    background: #12c064; /* Фон для браузеров, не поддерживающих градиент */
+    /* Градиент */
+    background: linear-gradient(#89c13e, #12c064);
+    background: -moz-linear-gradient(top, #12c064 0%, #89c13e 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#12c064), color-stop(100%,#89c13e));
+    background: -webkit-linear-gradient(top, #12c064 0%,#89c13e 100%);
+    background: -o-linear-gradient(top, #12c064 0%,#89c13e 100%);
+    background: -ms-linear-gradient(top, #12c064 0%,#89c13e 100%);
+    background: linear-gradient(top, #12c064 0%,#89c13e 100%);
+    border-radius: 10px; /* Скругляем уголки */
+    border: 1px solid #008; /* Добавляем синюю рамку */
+    color: #fff; /* Цвет текста и ссылки */
+   }
+.btn-view:hover {
+  background: linear-gradient(#97d444, #65ad07);
+  box-shadow: inset 0 1px 0 #e2f498, inset 0 2px 0 #ceec87,
+    inset 0 3px 0 #c3e67c, inset 0 5px 0 #bae475, inset 1px 0 3px #b2dc2d,
+    inset -1px 0 3px #b2dc2d, inset 0 -2px 2px #89d301,
+    0 0 3px rgba(0, 0, 0, 0.24);
+  color: #fff;
+}
+.btn-view:active {
+  background: linear-gradient(#83bb37, #12c064);
+  box-shadow: inset 0 3px 7px #3c7b00;
+}
+
+.form-type1{
+    margin-left: 20px;
+    margin-top: 50px;
+    width: 400px;
+}
+
+.tablegroups{
+    border: 1px solid #579a00;
+    float:left;
+    clear:both;
+    width:500px;
+    text-align:left;
 }

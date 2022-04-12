@@ -1,15 +1,10 @@
 from django import forms
 from .models import ContactGroup, Contact
 
-class GroupCreateForm(forms.ModelForm):
+class GroupEditForm(forms.ModelForm):
     class Meta:
         model = ContactGroup
         fields = ['parent', 'title', 'description']
-
-    parent = forms.ModelChoiceField(label='Группа:', queryset=ContactGroup.objects.all())
-    title = forms.CharField(label='Наименование:', widget=forms.TextInput(attrs={'placeholder': 'Наименование'}))
-    description = forms.CharField(label='Примечание:',
-                                  widget=forms.TextInput(attrs={'placeholder': 'Краткое описание'}))
 
 
 class ContactCreateForm(forms.ModelForm):

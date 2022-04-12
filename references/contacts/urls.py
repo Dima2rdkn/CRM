@@ -3,17 +3,11 @@ from . import views as contacts_views
 
 
 urlpatterns = [
-path('', contacts_views.contacts_list, name='clients'),
-path('contacts/<int:group_id>/', contacts_views.contacts_list,
-     name='contacts_list_by_group'),
-path('contacts/<int:group_id>/edit/', contacts_views.contacts_group_edit,
-     name='contacts_group_edit'),
-path('contacts/newgroup/', contacts_views.contacts_group_edit,
-     name='contacts_group_new'),
-path('contacts/element/<int:contact_id>/', contacts_views.contact_detail,
-     name='contact_detail'),
-path('contacts/element/<int:contact_id>/edit/', contacts_views.contact_edit,
-     name='contact_edit'),
-path('contacts/element/new/', contacts_views.contact_edit,
-     name='contact_new'),
+     path('', contacts_views.contacts_list, name='contacts'),
+     path('group/<int:group_id>/', contacts_views.contacts_list,
+          name='contacts_list_by_group'),
+     path('groups/', contacts_views.contact_groups, name='contact_groups_edit'),
+     path('groups/new', contacts_views.group_edit, name='contact_groups_new'),
+     path('groups/<int:pk>', contacts_views.GroupUpdateView.as_view(), name='contact_group_edit'),
+     path('groups/<int:pk>/del', contacts_views.GroupDeleteView.as_view(), name='contact_group_delete'),
 ]
