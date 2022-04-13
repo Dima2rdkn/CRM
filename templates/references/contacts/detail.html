@@ -1,10 +1,12 @@
-{% extends "main.html" %}
+{% extends "onepage.html" %}
 {% load static %}
 {% block title %} Цветы Мамайка - Клиенты {% endblock %}
 {% block subheader %}
-    <span class="form-group" style = "margin-left: 20px">
-            <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
-    </span>
+    <h5 class="inline"> Карточка клиента </h5>
+    <p class="separator"></p>
+    <a href="{% url 'contacts_new' %}" class="btn-view">Добавить</a>
+    <p class="separator"></p>
+    <a href="{% url 'contacts' %}" class="btn-view">Закрыть</a>
 {% endblock %}
 
 {% block detail %}

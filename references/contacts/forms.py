@@ -7,7 +7,7 @@ class GroupEditForm(forms.ModelForm):
         fields = ['parent', 'title', 'description']
 
 
-class ContactCreateForm(forms.ModelForm):
+class ContactEditForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'

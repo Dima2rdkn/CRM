@@ -5,21 +5,21 @@
     {% if contact %}{{ contact.title }}{% else %}Цветы Мамайка - Новый клиент {% endif %}
 {% endblock %}
 {% block subheader %}
-    <span class="form-group" style = "margin-left: 20px">
+    <span class="inline" style = "margin-left: 20px">
         <h2 class="refname">Клиенты </h2>
     </span>
 
-    <span class="form-group" style = "margin-left: 20px">
+    <span class="inline" style = "margin-left: 20px">
             <button class="btn btn-oval" name="Edit" form="form_contact_edit"> Записать</button>
     </span>
-    <span class="form-group">
+    <span class="inline">
             <button class="btn btn-oval" onclick="history.back();"> Закрыть</button>
     </span>
-    <span class="form-group">
+    <span class="inline">
            <p class="separator"></p>
     </span>
     {% if contact %}
-    <span class="form-group">
+    <span class="inline">
          <button class="btn btn-oval" name="Delete" form="form_contact_edit"> Удалить</button>
     </span>
     {% endif %}

@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} Цветы Мамайка - Клиенты {% endblock %}
 {% block subheader %}
-    <span class="form-group">
+    <span class="inline">
         <h5> Справочник Клиенты </h5>
     </span>
     <p class="separator"></p>
@@ -11,8 +11,8 @@
 {% endblock %}
 
 {% block vnavbar %}
-    <span class="form-group"> <h5>Группы</h5> </span>
-    <span class="form-group"> <a href="{% url 'contact_groups_edit' %}"><i class="fa-solid fa-pen-to-square"></i></a> </span>
+    <span class="inline"> <h5>Группы</h5> </span>
+    <span class="inline"> <a href="{% url 'contact_groups_edit' %}"><i class="fa-solid fa-pen-to-square"></i></a> </span>
     <ul>
         {% if group %}
              <li><a href="{% url "contacts" %}">Все</a></li>
@@ -33,15 +33,16 @@
     {% else %}
         <h5> Клиенты </h5>
     {% endif %}
-    {% for a in contacts %}
+    {% for el in contacts %}
         <div class="item">
-            <a href="#">
-                <img class="img-preview" src="{% if a.image %}{{ a.image.url }}
+            <a href= "{{ el.get_absolute_url }}" >
+                <img class="img-preview" src="{% if el.image %}{{ el.image.url }}
                 {% else %}{% static "img/no-image.png" %}{% endif %}"
                      width="100"
                      alt="[X]">
             </a>
-            <a href="#">{{ a }}</a>
+            <a href= "{{ el.get_absolute_url }}">{{ el }}</a>
+            <p class="separator">{{ el.phone }}</p>
         </div>
     {% endfor %}
 {% endblock %}

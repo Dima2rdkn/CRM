@@ -59,5 +59,6 @@ class Contact(models.Model):
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
+
     def get_absolute_url(self):
         return reverse('contact_detail', args=[self.id])
