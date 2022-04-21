@@ -4,46 +4,49 @@
 {% block subheader %}
     <h5 class="inline"> Карточка клиента </h5>
     <p class="separator"></p>
-    <a href="{% url 'contacts_new' %}" class="btn-view">Добавить</a>
-    <p class="separator"></p>
-    <a href="{% url 'contacts' %}" class="btn-view">Закрыть</a>
+    <a href="{% url 'contacts' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
 {% endblock %}
 
-{% block detail %}
-    <div>
-        <a><img class="img-preview" src="{% if a.image %} {{ a.image.url }}
-            {% else %}{% static "img/no-image.png" %}{% endif %}
-                     width="100"
-                     alt="[x]">
-        </a>
-    </div>
-    <div>
-        <h3>{{ contact.first_name }}</h3>
-    </div>
-    <div>
-        <h3>{{ contact.last_name }}</h3>
-    </div>
-    <div>
-        <h3>{{ contact.description }}</h3>
-    </div>
-    <div>
-        <h3>{{ contact.email }}</h3>
-    </div>
-    <div>
-        <h3>{{ contact.phone }}</h3>
-        <h3>{{ contact.phone2 }}</h3>
-    </div>
-    <div>
-        <h3>{{ contact.messenger }}</h3>
-    </div>
-    <div>
-        <h3>{{ contact.address }}</h3>
-    </div>
-    <div>
-        <h3>Системная информация:</h3>
-        <p>Автор: {{ contact.createdBy }}</p>
-        <p>Дата: {{ contact.createdOn }}</p>
-        <p>Дата: {{ contact.isActive }}</p>
+{% block main %}
+    <div class="divcenter">
+    <div class="Container">
+        <div class="row">
+            <div class="col-1">
+                <img class="img-preview" src="{% if contact.image %}{{ contact.image.url }}
+                            {% else %}{% static '/img/no-image.png' %}{% endif %}"
+                            width="100"
+                            alt="[X]">
+            </div>
+            <div class="col-8">
+                    <h4>{{ contact.first_name }}</h4>
+                    <h4>{{ contact.last_name }}</h4>
+            </div>
+        </div>
     </div>
 
+    <div>
+        <h5>{{ contact.description }}</h5>
+    </div>
+    <div>
+        <h5>{{ contact.email }}</h5>
+    </div>
+    <div>
+        <h5>{{ contact.phone }}</h5>
+        <h5>{{ contact.phone2 }}</h5>
+    </div>
+    <div>
+        <h5>{{ contact.messenger }}</h5>
+    </div>
+    <div>
+        <h5>{{ contact.address }}</h5>
+    </div>
+    <div>
+        <h5>Системная информация:</h5>
+        <p>Автор: {{ contact.createdBy }}</p>
+        <p>Дата: {{ contact.createdOn }}</p>
+        <p>Актив: {{ contact.isActive }}</p>
+    </div>
+    <a href="{% url 'contacts_edit' contact.id %}" class="btn btn-outline-success">Изменить</a>
+    <a href="{% url 'contacts_delete' contact.id %}" class="btn btn-outline-success">Удалить</a>
+ </div>
 {% endblock %}

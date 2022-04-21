@@ -1,4 +1,4 @@
-{% extends "main.html" %}
+{% extends "onepage.html" %}
 {% load static %}
 {% block title %} Цветы Мамайка - Клиенты {% endblock %}
 {% block subheader %}
@@ -6,40 +6,18 @@
         <h5> Справочник Клиенты </h5>
     </span>
     <p class="separator"></p>
-    <a href="{% url 'contacts_new' %}" class="btn-view">Добавить</a>
+    <a href="{% url 'contacts_new' %}" class="btn btn-outline-success btn-sm">Добавить</a>
     <p class="separator"></p>
-    <a href="{% url 'references' %}" class="btn-view">Закрыть</a>
-
-{% endblock %}
-
-{% block vnavbar %}
-    <span class="inline"> <h5>Группы</h5> </span>
-    <span class="inline"> <a href="{% url 'contact_groups_edit' %}"><i class="fa-solid fa-pen-to-square"></i></a> </span>
-    <ul>
-        {% if group %}
-             <li><a href="{% url "contacts" %}">Все</a></li>
-        {% endif %}
-        {% for g in groups %}
-            {% if g.parent == group %}
-                <li>
-                    <a href="{{ g.get_absolute_url }}">{{ g.title }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+    <a href="{% url 'references' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
 {% endblock %}
 {% block main %}
-    {% if group %}
-        <h5>{{ group.title }}</h5>
-        <p>{{ group.description }}</p>
-    {% else %}
-        <h5> Клиенты </h5>
-    {% endif %}
     <table class="container table table-striped">
         <thead>
             <tr class="row">
-                <th class="col-sm" scope="col"><i class="fa-solid fa-camera"></i></th>
+                <th class="col-1" scope="col">Группа</th>
+                <th class="col-1" scope="col"><i class="fa-solid fa-camera"></i></th>
                 <th class="col-sm" scope="col">Клиент</th>
+                <th class="col-sm" scope="col">Дата создания</th>
                 <th class="col-sm" scope="col">Телефон</th>
                 <th class="col-sm" scope="col">Адрес</th>
             </tr>
@@ -47,7 +25,8 @@
         <tbody>
             {% for el in contacts %}
                 <tr class="row">
-                    <td class="col-sm">
+                    <td class="col-1">{{ el.category }}</td>
+                    <td class="col-1">
                         <a href= "{{ el.get_absolute_url }}">
                             <img class="img-preview" src="{% if el.image %}{{ el.image.url }}
                             {% else %}{% static '/img/no-image.png' %}{% endif %}"
@@ -58,8 +37,9 @@
                     <td class="col-sm">
                         <a href= "{{ el.get_absolute_url }}">{{ el }}</a>
                     </td>
+                    <td class="col-sm">{{ el.createdOn }}</td>
                     <td class="col-sm">{{ el.phone }}</td>
-                    <td class="col-sm">{{ el.adress }}</td>
+                    <td class="col-sm">{{ el.address }}</td>
                 </tr>
             {% endfor %}
         </tbody>

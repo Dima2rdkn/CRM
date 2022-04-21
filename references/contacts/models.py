@@ -35,23 +35,25 @@ class Contact(models.Model):
         ('SC', 'Snapchat'),
         ('SK', 'Skype'),
     ]
-    category = models.ForeignKey(ContactGroup, on_delete=models.PROTECT,
+    category = models.ForeignKey(ContactGroup, on_delete=models.SET_NULL,
                                  db_index=True, null=True, verbose_name='Группа')
     first_name = models.CharField(max_length=255, verbose_name='Имя')
-    last_name = models.CharField(max_length=255, verbose_name='Фамилия')
-    email = models.EmailField(unique=True, verbose_name='Почта')
+    last_name = models.CharField(blank=True, max_length=255, verbose_name='Фамилия')
+    email = models.EmailField(blank=True, verbose_name='Почта')
     phone = models.CharField(max_length=20, verbose_name='Телефон')
-    phone2 = models.CharField(max_length=20, verbose_name='Телефон2')
+    phone2 = models.CharField(blank=True, max_length=20, verbose_name='Телефон2')
     messenger = models.CharField(max_length=2, choices=MESSENGERS, default='SM'
                                  , verbose_name='Мессенджер')
-    address = models.TextField(blank=True, null=True, verbose_name='Адрес')
-    description = models.TextField(blank=True, null=True, verbose_name='Описание')
+    address = models.TextField(blank=True, verbose_name='Адрес')
+    description = models.TextField(blank=True, verbose_name='Описание')
     image = models.ImageField(blank=True, upload_to='images/contacts/',
                               verbose_name='Изображение')
-    createdBy = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE,
+    createdBy = models.ForeignKey(User, related_name='author', on_delete=models.PROTECT,
                                   verbose_name='Автор')
     createdOn = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
-    isActive = models.BooleanField(default=False)
+    isActive = models.BooleanField(default=True)
+
+
 
     def __str__(self):
         return self.last_name + ' ' + self.first_name

@@ -16,7 +16,8 @@
 </head>
 <body>
 <header>
-    <span class="logo"> Цветы Мамайка </span>
+    <span class="logo">
+        <a href="{% url 'main' %}">Цветы Мамайка</a> </span>
     <span class="user">
         {% if request.user.is_authenticated %}
             {{ request.user.first_name }}
@@ -26,14 +27,12 @@
         {% endif %}
     </span>
     <span class="avatar">
-        <img src="{% static "img/no-avatar.png" %}" height="20" width="20">
+       <i class="fa-solid fa-user"></i>
     </span>
 </header>
 <article>
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
+    {% block content %}
+    {% endblock %}
 </article>
 <footer>
     <p> (С)2020 D2RDKN-Studio Все права защищены.</p>

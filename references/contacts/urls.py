@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views as contacts_views
 
-
 urlpatterns = [
      path('', contacts_views.contacts_list, name='contacts'),
      path('group/<int:group_id>/', contacts_views.contacts_list,
