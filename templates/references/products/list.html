@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Товары и услуги {% endblock %}
+{% block subheader %}
+    <span class="inline">
+        <h5> Справочник Товары и услуги </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'references' %}" class="btn-view">Закрыть</a>
+
+{% endblock %}
+
+{% block vnavbar %}
+    <span class="inline"> <h5>Категории</h5> </span>
+    <span class="inline"> <a href="categories"><i class="fa-solid fa-pen-to-square"></i></a> </span>
+    <ul>
+        {% if group %}
+             <li><a href="{% url "products_list" %}">Все</a></li>
+        {% endif %}
+        {% for g in categories %}
+            {% if g.parent == group %}
+                <li>
+                    <a href="{{ g.get_absolute_url }}">{{ g }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}
+{% block main %}
+    {% if group %}
+        <h5 class="inline">{{ group }}</h5>
+    {% else %}
+        <h5 class="inline"> Товары и услуги </h5>
+    {% endif %}
+    <span class="inline"> <a href="new"><i class="fa-solid fa-circle-plus"></i></a> </span>
+        {% for g in categories %}
+            {% for el in g.category_product.all %}
+                    <div class="row">
+                        <div class="col">
+                            <a href= "{{ el.get_absolute_url }}">{{ el }}</a>
+                        </div>
+                    </div>
+            {% endfor %}
+        {% endfor %}
+{% endblock %}

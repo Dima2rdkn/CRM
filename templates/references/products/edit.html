@@ -1,0 +1,37 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Клиенты
+{% endblock %}
+{% block subheader %}
+     <span class="inline">
+        <h5> Товары и Услуги </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'products_list' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <h5>Товар/Услуга:</h5>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.errors }}
+            {{ form.as_ul }}
+            {{ formset.management_form }}
+            {% for fm in formset %}
+                {{ form }}<br>
+            {% endfor %}
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-outline-success" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script> document.getElementById('avatar').addEventListener('change', showFile, false);
+    </script>
+{% endblock %}
+

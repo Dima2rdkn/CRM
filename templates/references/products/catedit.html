@@ -1,0 +1,58 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Клиенты
+{% endblock %}
+{% block subheader %}
+    <span class="inline">
+        <h5> Категория товаров </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'categories' %}" class="btn-view">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if error %}
+        <div> {{error}} </div>>
+    {% endif %}
+    <div class="row">
+        <div class="col-2">
+            {{ form.parent.label}}
+        </div>
+        <div class="col-4">
+            {{ form.parent }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <img class="img-thumbnail" id="foto" src="{% if form.instance.image %}{{ form.instance.image.url }}
+                {% else %}{% static '/img/no-image.png' %}{% endif %}" width=100>
+            <div class="card-body">
+                {{ form.image }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {{ form.name.label }}
+        </div>
+        <div class="col-4">
+            {{ form.name }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {{ form.slug.label }}
+        </div>
+        <div class="col-4">
+            {{ form.slug }}
+        </div>
+    </div>
+     <div><button class="btn btn-success" type="submit">Сохранить</button></div>
+</form>
+<script> document.getElementById('avatar').addEventListener('change', showFile, false);
+</script>
+{% endblock %}
+

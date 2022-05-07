@@ -1,0 +1,23 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block subheader %}
+    <h5 class="inline"> Цветы Мамайка - Товары и услуги </h5>
+    <p class="separator"></p>
+    <a href="{% url 'products_cat_new' %}" class="btn-view">Добавить</a>
+    <p class="separator"></p>
+    <a href="{% url 'products_list' %}" class="btn-view">Закрыть</a>
+{% endblock %}
+{% block main %}
+    {% for el in categories %}
+        <div class="alert tablegroups">
+            <a href="{% url 'products_cat_edit' el.slug %}" class="btn btn-success inline"><i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{% url 'products_cat_del' el.slug %}" class="btn btn-danger inline"><i class="fa-solid fa-trash"></i></a>
+            <p class ="separator"></p>
+            <img class="img-preview inline" src="{% if el.image %}{{ el.image.url }}
+                            {% else %}{% static '/img/no-image.png' %}{% endif %}"
+                            width="50"
+                            alt="[X]">
+            <h5 class="inline">{% if el.parent%} {{ el.parent }}/ {% endif %}{{ el.name}}</h5>
+        </div>
+    {%endfor%}
+{% endblock %}

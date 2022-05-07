@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fontawesomefree',
-    'crispy_forms',
     'main',
     'references',
     'references.contacts',
+    'references.products',
 ]
 
 MIDDLEWARE = [

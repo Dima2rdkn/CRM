@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from references.contacts.models import ContactGroup, Contact
 from .forms import GroupEditForm, ContactEditForm
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
