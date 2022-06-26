@@ -1,3 +1,5 @@
+import vobject
+import base64
 from django.shortcuts import render, get_object_or_404
 from references.contacts.models import ContactGroup, Contact
 from .forms import GroupEditForm, ContactEditForm
@@ -72,3 +74,51 @@ def contacts_list(request, group_id=None):
 def contact_groups(request):
     groups = ContactGroup.objects.all()
     return render(request, 'references/contacts/groups.html', {'groups': groups})
+
+
+def contactsImport(request):
+    if request.method == 'POST':
+        fd = request.FILES['file']
+        """
+        Убираем переносы строк, так как vobject 
+        нифига не умеет читать перенесенные строки, а
+        в vcard строки длиннее 75 символов, переносятся на новую строку 
+        с символом '='
+        Ну и переводим за одним в кодировку utf-8
+        """
+        fd = fd.read().decode('utf-8').replace("=\r\n=", '=').replace("=\r\n;", '=;')
+        # Считываем все vcard из файла
+        vcardlist = vobject.readComponents(fd)
+        # Готовим словарь
+        flist = {}
+        for vcard in vcardlist:
+            # Проверяем реквизиты объекта на наличие соответствуюших атрибутов
+            # и загоняем все имеющиеся в список.
+            if hasattr(vcard, 'fn'):
+                while vcard.contents['fn'][0].value in flist:
+                    vcard.contents['fn'][0].value = vcard.contents['fn'][0].value+"*"
+                if hasattr(vcard, 'tel'):
+                    cell = [tel.value for tel in vcard.contents['tel']]
+                else:
+                    cell = []
+                if hasattr(vcard, 'photo'):
+                    # фото в шаблон нужно передавать в utf-8 Base64 кодировке, а
+                    # vobject уже постарался считать в каком-то бинарном формате
+                    # по-этому переводим все обратно.
+                    strphoto = base64.b64encode(vcard.photo.value).decode('utf-8')
+                else:
+                    strphoto = ""
+                if hasattr(vcard, 'email'):
+                    email = [email.value for email in vcard.contents['email']]
+                else:
+                    email = []
+                vcardvalue = [cell, email, strphoto]
+                flist.update({vcard.contents['fn'][0].value: vcardvalue})
+        # сортируем, для красоты
+        sortedlist = sorted(flist.keys())
+        sorteddict = {}
+        for element in sortedlist:
+            sorteddict[element] = flist[element]
+        # и отправляем в шаблон...
+        return render(request, 'references/contacts/import.html', {'flist': sorteddict})
+    return render(request, 'references/contacts/import.html')

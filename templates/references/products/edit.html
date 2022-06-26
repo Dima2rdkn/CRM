@@ -18,11 +18,14 @@
         </div>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {{ form.non_form_errors }}
             {{ form.errors }}
-            {{ form.as_ul }}
-            {{ formset.management_form }}
-            {% for fm in formset %}
-                {{ form }}<br>
+            {{ form.as_p }}
+            <h5 class="text-info">Добавьте изображения</h5>
+            {{ image_formset.non_form_errors }}
+            {{ image_formset.management_form }}
+            {% for fm in image_formset %}
+                {{ fm }}<br>
             {% endfor %}
             <div class="row">
                 <div class="col">

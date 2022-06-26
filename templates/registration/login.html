@@ -1,8 +1,8 @@
-{% extends "base.html" %}
+{% extends "onepage.html" %}
 
 {% block title %}Авторизация{% endblock %}
 
-{% block content %}
+{% block main %}
     <h1>Авторизация</h1>
     {% if form.errors %}
         <p>Ошибка авторизации. Попробуй снова</p>
@@ -11,10 +11,24 @@
     {% endif %}
     <div class="login-form">
         <form action="{% url 'login' %}" method="post">
-            {{ form.as_p }}
+            <div class="row">
+                <div class="col-2">
+                    {{ form.username.label}}
+                </div>
+                <div class="col">
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                   {{ form.password.label }}
+                </div>
+                <div class="col">
+                    {{ form.password }}
+                </div>
+            </div>
             {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}"/>
-            <p><input type="submit" value="Войти"></p>
+            <p><input class="btn btn-outline-success" type="submit" value="Войти"></p>
         </form>
     </div>
 {% endblock %}

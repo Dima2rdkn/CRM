@@ -1,0 +1,56 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Клиенты
+{% endblock %}
+{% block subheader %}
+     <span class="inline">
+        <h5> Импорт клиентов </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'contacts' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        {% if flist %}
+            {% for key,val in flist.items %}
+                <div class="row">
+                        <div class="col">
+                            <img src='data:image/jpeg;base64,{{ val.2 }}'>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox">
+                        </div>
+                        <div class="col">
+                            {{ key }}
+                        </div>
+                        <div class="col">
+                            {% for eval in val.0 %}
+                            {{ eval }}
+                            {% endfor %}
+                        </div>
+                        <div class="col">
+                            {% for eval in val.1 %}
+                            {{ eval }}
+                            {% endfor %}
+                        </div>
+             </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <input type="file" name="file" id="importfile" accept=".vcf">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-outline-success" type="submit">Импортировать</button>
+                </div>
+            </div>
+        </form>
+    </div>
+ {% endblock %}
+
