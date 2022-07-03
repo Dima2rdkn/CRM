@@ -12,45 +12,114 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container-fluid">
-        {% if flist %}
-            {% for key,val in flist.items %}
-                <div class="row">
-                        <div class="col">
-                            <img src='data:image/jpeg;base64,{{ val.2 }}'>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox">
-                        </div>
-                        <div class="col">
-                            {{ key }}
-                        </div>
-                        <div class="col">
-                            {% for eval in val.0 %}
-                            {{ eval }}
+    <tbody class="container-fluid">
+        {% if message %}
+            {{ message }}
+        {% else %}
+            {% if flist %}
+                <form method="post" id="formId">
+                    {% csrf_token %}
+                    <table class="container table table-striped">
+                        <thead>
+                            <tr class="row">
+                                <th class="col-1" scope="col"><input type="checkbox" id="filterchbox"></th>
+                                <th class="col-1" scope="col"><i class="fa-solid fa-camera"></i></th>
+                                <th class="col-2" scope="col">Клиент</th>
+                                <th class="col-2" scope="col">Телефон</th>
+                                <th class="col-2" scope="col">e-Mail</th>
+                                <th class="col-2" scope="col">Организация</th>
+                                <th class="col-2" scope="col">Адрес</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for val in flist %}
+                            <tr class="row">
+                                <td class="col-1">
+                                    <input type="checkbox" name="item" value={{ val.id }}>
+                                </td>
+                                <td class="col-1">
+                                    {% if val.image %}
+                                        <img class="rounded-circle" width = 50px src='data:image/jpeg;base64,{{ val.image }}'>
+                                    {% else %}
+                                        <img class="rounded-circle" width = 50px src="{% static '/img/no-image.png' %}"
+                                        width="50"
+                                        alt="[X]">
+                                    {% endif %}
+                                </td>
+                                <td class="col-2">
+                                   {{ val.first_name }} {{ val.last_name }}
+                                </td>
+                                <td class="col-2">
+                                   {{ val.phone }} {{ val.phone2 }}
+                                </td>
+                                <td class="col-2">
+                                   {{ val.email }}
+                                </td>
+                                <td class="col-2">
+                                   {{ val.description }}
+                                </td>
+                                <td class="col-2">
+                                   {{ val.address }}
+                                </td>
+                            </tr>
                             {% endfor %}
-                        </div>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-outline-success" name="import" value="1" type="submit">Сохранить</button>
+                    <button class="btn btn-outline-success" name="clear" value="2" type="submit">Удалить</button>
+                </form>
+                {% if flist.has_other_pages %}
+                <nav id="pagination" class="col align-self-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                {% if flist.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo;</span></li>
+                {% endif %}
+                {% for i in flist.paginator.page_range %}
+                    {% if i > flist.number|add:-4 and i < flist.number|add:4 %}
+                        {% if flist.number == i %}
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if flist.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link" href="#" tabindex="-1" aria-disabled="true">&raquo;</span></li>
+                {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+            {% else %}
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="row">
                         <div class="col">
-                            {% for eval in val.1 %}
-                            {{ eval }}
-                            {% endfor %}
+                            <input type="file" name="file" id="importfile" accept=".vcf">
                         </div>
-             </div>
-            {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-outline-success" name="load_file" value="1" type="submit">Импортировать</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
         {% endif %}
-        <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-            <div class="row">
-                <div class="col">
-                    <input type="file" name="file" id="importfile" accept=".vcf">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-outline-success" type="submit">Импортировать</button>
-                </div>
-            </div>
-        </form>
     </div>
+ <script>
+ document.getElementById("filterchbox").addEventListener("click", function(e) {
+    element = document.forms["formId"].elements;
+    melement=document.getElementById("filterchbox")
+    for (i=0; i < element.length; i++) {
+        if (element[i].name == "item"){
+                element[i].checked = melement.checked;
+        }
+    }
+});
+</script>
  {% endblock %}
 

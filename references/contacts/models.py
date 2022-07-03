@@ -63,3 +63,19 @@ class Contact(models.Model):
 
     def get_absolute_url(self):
         return reverse('contact_detail', args=[self.id])
+
+
+class ContactTmp(models.Model):
+
+    first_name = models.CharField(max_length=255, verbose_name='Имя')
+    last_name = models.CharField(blank=True, max_length=255, verbose_name='Фамилия')
+    email = models.EmailField(blank=True, verbose_name='Почта')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    phone2 = models.CharField(blank=True, max_length=20, verbose_name='Телефон2')
+    address = models.TextField(blank=True, verbose_name='Адрес')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    image = models.TextField(blank=True, verbose_name='Изображение')
+
+    class Meta:
+        ordering = ['first_name']
+

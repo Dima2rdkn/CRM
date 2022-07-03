@@ -12,3 +12,7 @@ function showFile(e) {
   fr.readAsDataURL(f);
 }
 }
+
+function setCheckbox(e){
+
+}

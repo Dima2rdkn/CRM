@@ -13,5 +13,5 @@ urlpatterns = [
      path('new', contacts_views.ContactCreateView.as_view(), name='contacts_new'),
      path('<int:pk>/edit', contacts_views.ContactUpdateView.as_view(), name='contacts_edit'),
      path('<int:pk>/del', contacts_views.ContactDeleteView.as_view(), name='contacts_delete'),
-     path('import/', contacts_views.contactsImport, name='contacts_import'),
+     path('import/', contacts_views.contacts_import, name='contacts_import'),
 ]
