@@ -17,7 +17,8 @@ header {
 header .logo {
     float: left;
     color: #f3f7cc;
-    font-size: 18px;
+    font-size: 24px;
+    font-family: "OpenSans-Semibold",sans-serif;
     font-weight: bold;
 }
 
@@ -94,9 +95,9 @@ footer p {
     padding: 5px; /* Поля вокруг текста */
 }
 #subheader {
-    text-align: center;
+    text-align: left;
     color: #cc0033;
-    padding: 10px 10px;
+    padding: 10px 80px;
     height: 50px;
     font-size: 14px;
     background: #bbffbb;
@@ -110,6 +111,26 @@ footer p {
 .separator{
     display: inline-block;
     margin-right:20px;
+}
+.tools-item{
+    display: inline-block;
+    padding-right: 12px;
+}
+.tools-item a{
+    color:#12c064;
+}
+.inputbox{
+    border-radius: 3px;
+    border: 1px solid GREEN;
+}
+.tools-item input[type="text"]
+{
+    border: 0px;
+    background-color: transparent;
+    position: relative;
+    box-sizing: border-box;
+    padding: 2px 50px 6px 10px;
+    outline: 0;
 }
 .inline{
     display: inline-block;

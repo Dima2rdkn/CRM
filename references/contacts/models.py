@@ -53,7 +53,6 @@ class Contact(models.Model):
     createdOn = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     isActive = models.BooleanField(default=True)
 
-
     def __str__(self):
         return self.last_name + ' ' + self.first_name
 

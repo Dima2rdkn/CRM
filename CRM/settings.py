@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'references',
     'references.contacts',
     'references.products',
+    'references.stores',
+    'references.measure',
+    'references.suppliers',
 ]
 
 MIDDLEWARE = [

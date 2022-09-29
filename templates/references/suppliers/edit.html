@@ -1,0 +1,127 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Поставщики
+{% endblock %}
+{% block subheader %}
+     <span class="inline">
+        <h5> Группа Поставщиков </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'suppliers' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <h5>Поставщик:</h5>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.errors }}
+            <div class="row">
+                <div class="col-2">
+                    {{ form.category.label}}
+                </div>
+                <div class="col">
+                    {{ form.category }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.full_name.label }}
+                </div>
+                <div class="col">
+                    {{ form.full_name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.name.label }}
+                </div>
+                <div class="col">
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.INN.label }}
+                </div>
+                <div class="col-2">
+                    {{ form.INN }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.KPP.label }}
+                </div>
+                <div class="col-2">
+                    {{ form.KPP }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.director.label }}
+                </div>
+                <div class="col">
+                    {{ form.director }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.phone.label }}
+                </div>
+                <div class="col">
+                    {{ form.phone }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.phone2.label }}
+                </div>
+                <div class="col">
+                    {{ form.phone2 }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.email.label }}
+                </div>
+                <div class="col">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.address.label }}
+                </div>
+                <div class="col">
+                    {{ form.address }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.post_address.label }}
+                </div>
+                <div class="col">
+                    {{ form.post_address }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.description.label }}
+                </div>
+                <div class="col">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-outline-success" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script> document.getElementById('avatar').addEventListener('change', showFile, false);
+    </script>
+{% endblock %}

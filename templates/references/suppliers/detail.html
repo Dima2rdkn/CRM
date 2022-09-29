@@ -1,0 +1,48 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Поставщики {% endblock %}
+{% block subheader %}
+    <h5 class="inline"> Карточка поставщика </h5>
+    <p class="separator"></p>
+    <a href="{% url 'suppliers' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <div class="divcenter">
+    <div class="Container">
+        <div class="row">
+            <div class="col-8">
+                    <h4>{{ supplier.full_name }}</h4>
+                    <h4>{{ supplier.name }}</h4>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h5>{{ supplier.INN }}</h5>
+    </div>
+    <div>
+        <h5>{{ supplier.description }}</h5>
+    </div>
+    <div>
+        <h5>{{ supplier.email }}</h5>
+    </div>
+    <div>
+        <h5>{{ supplier.phone }}</h5>
+        <h5>{{ supplier.phone2 }}</h5>
+    </div>
+    <div>
+        <h5>{{ supplier.director }}</h5>
+    </div>
+    <div>
+        <h5>{{ supplier.address }}</h5>
+    </div>
+    <div>
+        <h5>Системная информация:</h5>
+        <p>Автор: {{ supplier.createdBy }}</p>
+        <p>Дата: {{ supplier.createdOn }}</p>
+        <p>Актив: {{ supplier.isActive }}</p>
+    </div>
+    <a href="{% url 'supplier_edit' supplier.id %}" class="btn btn-outline-success">Изменить</a>
+    <a href="{% url 'supplier_delete' supplier.id %}" class="btn btn-outline-success">Удалить</a>
+ </div>
+{% endblock %}

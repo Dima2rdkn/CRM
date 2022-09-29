@@ -1,0 +1,21 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Склады
+{% endblock %}
+{% block subheader %}
+    <span class="inline">
+        <h5> Склады </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'stores_list' %}" class="btn-view">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+<form class="form-type1" method="post">
+    {% csrf_token %}
+    <h4> {{ stores.name }} </h4>
+     <div><button class="btn btn-success" type="submit">Удалить</button></div>
+</form>
+{% endblock %}
+

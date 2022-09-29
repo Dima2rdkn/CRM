@@ -1,0 +1,25 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Склады {% endblock %}
+{% block subheader %}
+    <span class="inline">
+        <h5> Справочник Склады </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'references' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <h5 class="inline"> Склады </h5>
+    <span class="inline"> <a href="new"><i class="fa-solid fa-circle-plus"></i></a> </span>
+    {% for el in stores %}
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'store_detail' el.slug %}" class="text-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{% url 'store_del' el.slug %}" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                <p class ="separator"></p>
+                {{ el }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

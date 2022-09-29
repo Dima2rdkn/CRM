@@ -1,0 +1,26 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Клиенты
+{% endblock %}
+{% block subheader %}
+    <span class="inline">
+        <h5> Группа клиентов </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'contact_groups_edit' %}" class="btn-view">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+<form class="form-type1" method="post">
+    {% csrf_token %}
+    {% if error %}
+        <div> {{error}} </div>>
+    {% endif %}
+    <div>{{form.parent.label}}</div> <div>{{ form.parent }}</div>
+    <div>{{form.title.label}}</div> <div>{{ form.title }}</div>
+    <div>{{form.description.label}}</div> <div>{{ form.description }}</div>
+    <div><button class="btn btn-success" type="submit">Сохранить</button></div>
+</form>
+{% endblock %}
+

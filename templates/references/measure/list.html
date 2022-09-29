@@ -1,0 +1,27 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Измерения {% endblock %}
+{% block subheader %}
+    <span class="inline">
+        <h5> Справочник Измерения </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'references' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <h5 class="inline"> Измерения </h5>
+    <span class="inline"> <a href="new"><i class="fa-solid fa-circle-plus"></i></a> </span>
+    {% for el in measure %}
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'measure_detail' el.slug %}" class="text-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{% url 'measure_del' el.slug %}" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                <p class ="separator"></p>
+                {{ el }}
+                <p class ="separator"></p>
+                {{el.description}}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

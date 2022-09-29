@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from references.contacts.models import ContactGroup, Contact, ContactTmp
 from .forms import GroupEditForm, ContactEditForm
+from django.db.models import Q
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -61,14 +62,30 @@ class ContactDeleteView(LoginRequiredMixin, DeleteView):
 
 @login_required
 def contacts_list(request, group_id=None):
+    sfilter = request.GET.get('Filter')     # Проверяем параметр "Filter" из GET параметра
+    if sfilter is None:
+        sfilter = ""
     if group_id:
         group = get_object_or_404(ContactGroup, pk=group_id)
         groups = ContactGroup.objects.filter(parent=group)
-        contacts = Contact.objects.filter(category=group)
+        contacts = Contact.objects.filter(
+            Q(first_name__icontains=sfilter) |
+            Q(last_name__icontains=sfilter) |
+            Q(phone__icontains=sfilter) |
+            Q(phone2__icontains=sfilter) |
+            Q(address__icontains=sfilter) |
+            Q(category=groups)
+                                          )
     else:
         group = None
         groups = ContactGroup.objects.all()
-        contacts = Contact.objects.all()
+        contacts = Contact.objects.filter(
+            Q(first_name__icontains=sfilter) |
+            Q(last_name__icontains=sfilter) |
+            Q(phone__icontains=sfilter) |
+            Q(phone2__icontains=sfilter) |
+            Q(address__icontains=sfilter)
+        )
     return render(request, 'references/contacts/contacts.html',
                   {'group': group, 'groups': groups, 'contacts': contacts})
 
@@ -89,26 +106,40 @@ def contacts_paginator(request):
     page_obj = paginator.get_page(page_number)
     return page_obj
 
+
+"""
+Функция импортирует контакты из файла vCard во временную таблицу,
+из которой можно переносить записи в таблицу "Клиенты"
+"""
 @login_required
 def contacts_import(request):
     contacts = ContactTmp.objects.all()
-    if contacts.count() > 0:
-        if request.method == 'POST' and request.POST.get("clear"):
+    if contacts.count() > 0:    # проверка на существование контактов во временном файле.
+        if request.method == 'POST' and request.POST.get("clear"):      # удаляем отмеченные записи
             items = request.POST.getlist("item")
             for item in items:
                 ContactTmp.objects.filter(id=item).delete()
             return render(request, 'references/contacts/import.html', {'flist': contacts_paginator(request)})
-        if request.method == 'POST' and request.POST.get("import"):
+        if request.method == 'POST' and request.POST.get("import"):     # переносим отмеченные записи в "Клиенты"
             items = request.POST.getlist("item")
             for item in items:
+                # обработка перевода картинки из BASE64 в JPG файл.
                 contact_tmp = ContactTmp.objects.get(id=item)
+                """
+                Проверка. Если уже существует запись, или обновляем или пропускаем
+                if (Contact.objects.filter(phone=contact_tmp.phone).exists()) \
+                        or (Contact.objects.filter(phone=contact_tmp.phone2).exists()) \
+                        or (Contact.objects.filter(phone2=contact_tmp.phone).exists()) \
+                        or (Contact.objects.filter(phone2=contact_tmp.phone2).exists()):
+                    continue
+                """
                 if contact_tmp.image:
                     str64 = contact_tmp.image
                     ext = ".jpg"
                     data = ContentFile(base64.b64decode(str64), name='contact_'+str(item) + ext)
                 else:
                     data = None
-                contact = Contact(first_name=contact_tmp.first_name,
+                client = Contact(first_name=contact_tmp.first_name,
                                   last_name=contact_tmp.last_name,
                                   email=contact_tmp.email,
                                   phone=contact_tmp.phone,
@@ -117,14 +148,13 @@ def contacts_import(request):
                                   description=contact_tmp.description,
                                   createdBy=request.user,
                                   image=data)
-                contact.save()
+                client.save()
                 ContactTmp.objects.filter(id=item).delete()
             return render(request, 'references/contacts/import.html',
                           {"message": "Импортировано: "+str(len(items))+" записей!"})
         return render(request, 'references/contacts/import.html', {'flist': contacts_paginator(request)})
-    else:
-        print("--------------------------> Load")
-        if request.method == 'POST' and request.POST.get("load_file"):
+    else:   # Временная таблица пустая
+        if request.method == 'POST' and request.POST.get("load_file"):  # загружаем данные из vCard
             fd = request.FILES['file']
             if fd:
                 """

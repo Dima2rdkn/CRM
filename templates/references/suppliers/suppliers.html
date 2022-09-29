@@ -1,12 +1,12 @@
 {% extends "onepage.html" %}
 {% load static %}
-{% block title %} Цветы Мамайка - Клиенты {% endblock %}
+{% block title %} Цветы Мамайка - Поставщики {% endblock %}
 {% block subheader %}
 	<span class="tools-item">
-        <h5> Справочник Клиенты </h5>
+        <h5> Справочник Поставщики </h5>
     </span>
     <p class="separator"></p>
-    <a href="{% url 'contacts_new' %}" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-plus"></i> Добавить</a>
+    <a href="{% url 'suppliers_new' %}" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-plus"></i> Добавить</a>
     <p class="separator"></p>
     <div class="tools-item inputbox">
         <form id="filterForm" method="get">
@@ -20,19 +20,6 @@
             </span>
         </form>
     </div>
-    <p class="separator"></p>
-    <div class="tools-item dropdown">
-        <button class="btn btn-outline-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <i class="fa-solid fa-gear"></i>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="import">Импорт vCard</a></li>
-            <li><a class="dropdown-item" href="#">Экспорт vCard</a></li>
-            <li><a class="dropdown-item" href="#">Повторы</a></li>
-        </ul>
-    </div>
-
 
     <p class="separator"></p>
     <a href="{% url 'references' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
@@ -44,29 +31,20 @@
         <thead>
             <tr class="row">
                 <th class="col-1" scope="col">Группа</th>
-                <th class="col-1" scope="col"><i class="fa-solid fa-camera"></i></th>
-                <th class="col-sm" scope="col">Клиент</th>
-                <th class="col-sm" scope="col">Дата создания</th>
+                <th class="col-sm" scope="col">Поставщик</th>
+                <th class="col-sm" scope="col">ИНН</th>
                 <th class="col-sm" scope="col">Телефон</th>
                 <th class="col-sm" scope="col">Адрес</th>
             </tr>
         </thead>
         <tbody>
-            {% for el in contacts %}
+            {% for el in suppliers %}
                 <tr class="row">
                     <td class="col-1">{{ el.category }}</td>
-                    <td class="col-1">
-                        <a href= "{{ el.get_absolute_url }}">
-                            <img class="img-preview" src="{% if el.image %}{{ el.image.url }}
-                            {% else %}{% static '/img/no-image.png' %}{% endif %}"
-                            width="50"
-                            alt="[X]">
-                        </a>
-                    </td>
                     <td class="col-sm">
                         <a href= "{{ el.get_absolute_url }}">{{ el }}</a>
                     </td>
-                    <td class="col-sm">{{ el.createdOn }}</td>
+                    <td class="col-sm">{{ el.INN }}</td>
                     <td class="col-sm">{{ el.phone }}</td>
                     <td class="col-sm">{{ el.address }}</td>
                 </tr>

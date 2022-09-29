@@ -33,7 +33,7 @@ class CatUpdateView(LoginRequiredMixin, UpdateView):
 class CatDeleteView(LoginRequiredMixin, DeleteView):
     model = Categories
     context_object_name = 'categories'
-    template_name = 'references/products/cat_delete.html'
+    template_name = 'references/products/delete.html'
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
