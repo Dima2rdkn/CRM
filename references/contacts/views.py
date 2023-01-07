@@ -55,7 +55,7 @@ class ContactUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.isActive = True
         return super().form_valid(form)
 
-
+# НАДО ПЕРЕДЕЛАТЬ НА УСТАНОВКУ ФЛАГА ISACTIVE в FALSE
 class ContactDeleteView(LoginRequiredMixin, DeleteView):
     model = Contact
     template_name = 'references/contacts/edit.html'

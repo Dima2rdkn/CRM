@@ -140,35 +140,19 @@ footer p {
     color: #12c064;
 }
 
-.btn-view {
-    display: inline-block; /* Строчно-блочный элемент */
-    padding: 5px 20px; /* Добавляем поля */
-    text-decoration: none; /* Убираем подчёркивание у ссылки */
-    cursor: pointer; /* Курсор в виде руки */
-    background: #12c064; /* Фон для браузеров, не поддерживающих градиент */
-    /* Градиент */
-    background: linear-gradient(#89c13e, #12c064);
-    background: -moz-linear-gradient(top, #12c064 0%, #89c13e 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#12c064), color-stop(100%,#89c13e));
-    background: -webkit-linear-gradient(top, #12c064 0%,#89c13e 100%);
-    background: -o-linear-gradient(top, #12c064 0%,#89c13e 100%);
-    background: -ms-linear-gradient(top, #12c064 0%,#89c13e 100%);
-    background: linear-gradient(top, #12c064 0%,#89c13e 100%);
-    border-radius: 10px; /* Скругляем уголки */
-    border: 1px solid #008; /* Добавляем синюю рамку */
-    color: #fff; /* Цвет текста и ссылки */
-   }
-.btn-view:hover {
-  background: linear-gradient(#97d444, #65ad07);
-  box-shadow: inset 0 1px 0 #e2f498, inset 0 2px 0 #ceec87,
-    inset 0 3px 0 #c3e67c, inset 0 5px 0 #bae475, inset 1px 0 3px #b2dc2d,
-    inset -1px 0 3px #b2dc2d, inset 0 -2px 2px #89d301,
-    0 0 3px rgba(0, 0, 0, 0.24);
-  color: #fff;
+.img-avatar
+{
+width: 50px;
 }
-.btn-view:active {
-  background: linear-gradient(#83bb37, #12c064);
-  box-shadow: inset 0 3px 7px #3c7b00;
+
+.img-thumbnail
+{
+width: 200px;
+}
+
+.img-preview
+{
+width: 200px;
 }
 
 .form-type1{
@@ -185,11 +169,43 @@ footer p {
     text-align:left;
 }
 
-.divcenter{
+.div-center{
     border: 1px solid #579a00;
     float:left;
     margin:20px;
     clear:both;
     width:500px;
     text-align:center;
+}
+
+.hover-effect-cover {
+    position: relative;
+}
+
+.hover-effect-cover:hover .btn-delimg{
+    opacity: 1;
+    transition: opacity .3s;
+}
+.hover-effect-cover:hover .btn-heart{
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.btn-delimg{
+    opacity: 0;
+    position: absolute;
+    top: calc(100% - 40px);
+    left: calc(100% - 40px);
+    background: rgba(0, 0, 0, .3);
+    color:#fff;
+    transition: opacity .3s;
+}
+.btn-heart{
+    opacity: 0;
+    position: absolute;
+    top: calc(100% - 40px);
+    left: 10px;
+    background: rgba(0, 0, 0, .3);
+    color:#fff;
+    transition: opacity .3s;
 }

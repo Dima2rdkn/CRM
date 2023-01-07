@@ -3,6 +3,9 @@
 {% block title %}
     Цветы Мамайка - Клиенты
 {% endblock %}
+{% block HeaderScript %}
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}
 {% block subheader %}
      <span class="inline">
         <h5> Группа клиентов </h5>
@@ -107,7 +110,7 @@
             </div>
         </form>
     </div>
-    <script> document.getElementById('avatar').addEventListener('change', showFile, false);
+    <script> document.getElementById('avatar').addEventListener('change',showFile.bind(null,"foto"));
     </script>
 {% endblock %}
 

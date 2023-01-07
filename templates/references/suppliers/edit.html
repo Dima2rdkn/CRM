@@ -122,6 +122,6 @@
             </div>
         </form>
     </div>
-    <script> document.getElementById('avatar').addEventListener('change', showFile, false);
+    <script> document.getElementById('avatar').addEventListener('change',showFile.bind(null,"foto"));
     </script>
 {% endblock %}

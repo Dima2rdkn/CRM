@@ -1,22 +1,37 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+from django.shortcuts import get_object_or_404
 
 
 class Categories(models.Model):
     name = models.CharField(max_length=128, verbose_name='Категория')
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, editable=True)
     image = models.ImageField(blank=True, upload_to='images/products/categories/',
                               verbose_name='Изображение')
     parent = models.ForeignKey('self', blank=True, null=True,
                                on_delete=models.SET_NULL,
                                verbose_name='Группа')
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Categories, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
+    @staticmethod
+    def get_list(**kwargs):
+        if ('slug' in kwargs) and (kwargs['slug']):
+            category_list = get_object_or_404(Categories, slug=kwargs['slug'])
+        else:
+            category_list = Categories.objects.all()
+        return category_list
+
     def get_absolute_url(self):
-        return reverse('categories')
+        return reverse('products_list_by_cat',  kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'Категория'
@@ -26,7 +41,7 @@ class Categories(models.Model):
 class Products(models.Model):
     category = models.ForeignKey(Categories, verbose_name='Категория', on_delete=models.PROTECT)
     title = models.CharField(max_length=255, verbose_name='Наименование')
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, editable=True)
     article = models.CharField(blank=True, max_length=16, verbose_name='Артикул')
     description = models.TextField(blank=True, verbose_name='Описание')
     createdBy = models.ForeignKey(User, related_name='manager', on_delete=models.PROTECT,
@@ -36,6 +51,18 @@ class Products(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Products, self).save(*args, **kwargs)
+
+    @staticmethod
+    def get_list(**kwargs):
+        product_list = Products.objects.filter(isActive=True).order_by('title')
+        if ('category' in kwargs) and (kwargs['category']):
+            product_list = product_list.filter(category=kwargs['category'])
+        return product_list
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.slug])
@@ -56,7 +83,7 @@ class ProductImages(models.Model):
     primary = models.BooleanField(default=False,)
 
     def __str__(self):
-        return '[image]'
+        return self.product.title + ' [image]'
 
     class Meta:
         verbose_name = 'Изображение'

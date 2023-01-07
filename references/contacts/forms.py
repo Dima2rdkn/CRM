@@ -26,7 +26,7 @@ class ContactEditForm(forms.ModelForm):
                              required=False)
     messenger = forms.ChoiceField(label='Мессенджер:', choices=Contact.MESSENGERS)
     address = forms.CharField(label='Адрес',
-                              widget=forms.Textarea(attrs={'rows': '3','placeholder': 'Город, Улица, Дома, Кв.'}))
+                              widget=forms.Textarea(attrs={'rows': '3', 'placeholder': 'Город, Улица, Дома, Кв.'}))
     description = forms.CharField(label='Примечание:', required=False,
                                     widget=forms.Textarea(attrs={'rows': '3', 'placeholder': 'Примечание'}))
 

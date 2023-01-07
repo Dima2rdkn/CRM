@@ -1,14 +1,14 @@
 {% extends "onepage.html" %}
 {% load static %}
 {% block title %}
-    Цветы Мамайка - Клиенты
+    Цветы Мамайка - Товары
 {% endblock %}
 {% block subheader %}
     <span class="inline">
         <h5> Категория товаров </h5>
     </span>
     <p class="separator"></p>
-    <a href="{% url 'categories' %}" class="btn-view">Закрыть</a>
+    <a href="{% url 'categories' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
 {% endblock %}
 
 {% block main %}
@@ -52,7 +52,7 @@
     </div>
      <div><button class="btn btn-success" type="submit">Сохранить</button></div>
 </form>
-<script> document.getElementById('avatar').addEventListener('change', showFile, false);
+<script> document.getElementById('avatar').addEventListener('change',showFile.bind(null,"foto"));
 </script>
 {% endblock %}
 

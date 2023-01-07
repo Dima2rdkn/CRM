@@ -1,5 +1,6 @@
 {% extends "main.html" %}
 {% load static %}
+{% load tree %}
 {% block title %} Цветы Мамайка - Товары и услуги {% endblock %}
 {% block subheader %}
     <span class="inline">
@@ -14,16 +15,9 @@
     <span class="inline"> <h5>Категории</h5> </span>
     <span class="inline"> <a href="categories"><i class="fa-solid fa-pen-to-square"></i></a> </span>
     <ul>
-        {% if group %}
-             <li><a href="{% url "products_list" %}">Все</a></li>
-        {% endif %}
-        {% for g in categories %}
-            {% if g.parent == group %}
-                <li>
-                    <a href="{{ g.get_absolute_url }}">{{ g }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
+        {% tree category|astree:"parent" %}
+            <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+        {% endtree %}
     </ul>
 {% endblock %}
 {% block main %}
@@ -32,14 +26,12 @@
     {% else %}
         <h5 class="inline"> Товары и услуги </h5>
     {% endif %}
-    <span class="inline"> <a href="new"><i class="fa-solid fa-circle-plus"></i></a> </span>
-        {% for g in categories %}
-            {% for el in g.category_product.all %}
-                    <div class="row">
-                        <div class="col">
-                            <a href= "{{ el.get_absolute_url }}">{{ el }}</a>
-                        </div>
-                    </div>
-            {% endfor %}
+    <span class="inline"> <a href="{% url 'products_new' %}"><i class="fa-solid fa-circle-plus"></i></a> </span>
+        {% for prod in products %}
+            <div class="row">
+                <div class="col">
+                    <a href= "{{ prod.get_absolute_url }}">{{ prod }}</a>
+                </div>
+            </div>
         {% endfor %}
 {% endblock %}

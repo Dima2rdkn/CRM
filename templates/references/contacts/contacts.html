@@ -57,7 +57,7 @@
                     <td class="col-1">{{ el.category }}</td>
                     <td class="col-1">
                         <a href= "{{ el.get_absolute_url }}">
-                            <img class="img-preview" src="{% if el.image %}{{ el.image.url }}
+                            <img class="img-avatar" src="{% if el.image %}{{ el.image.url }}
                             {% else %}{% static '/img/no-image.png' %}{% endif %}"
                             width="50"
                             alt="[X]">

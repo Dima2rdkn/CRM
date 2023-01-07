@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class ContactGroup(models.Model):
@@ -35,13 +36,14 @@ class Contact(models.Model):
         ('SC', 'Snapchat'),
         ('SK', 'Skype'),
     ]
+    phone_regex = RegexValidator(regex=r"^\+?1?\d{9,15}$")
     category = models.ForeignKey(ContactGroup, on_delete=models.SET_NULL,
                                  db_index=True, null=True, verbose_name='Группа')
     first_name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(blank=True, max_length=255, verbose_name='Фамилия')
     email = models.EmailField(blank=True, verbose_name='Почта')
-    phone = models.CharField(max_length=20, verbose_name='Телефон')
-    phone2 = models.CharField(blank=True, max_length=20, verbose_name='Телефон2')
+    phone = models.CharField(max_length=15, verbose_name='Телефон', validators=[phone_regex],)
+    phone2 = models.CharField(blank=True, max_length=15, verbose_name='Телефон2', validators=[phone_regex],)
     messenger = models.CharField(max_length=2, choices=MESSENGERS, default='SM'
                                  , verbose_name='Мессенджер')
     address = models.TextField(blank=True, verbose_name='Адрес')

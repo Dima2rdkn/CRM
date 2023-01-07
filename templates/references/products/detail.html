@@ -1,0 +1,46 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Товары и услуги  {% endblock %}
+{% block subheader %}
+    <h5 class="inline"> Карточка товара/услуги </h5>
+    <p class="separator"></p>
+    <a href="{% url 'products_list' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <div class="div-center">
+        <div>
+            <div class="row">
+                <div class="col-8">
+                    <img class="img-preview" src="{% if primary_image.image %}{{ primary_image.image.url }}
+                                {% else %}{% static '/img/no-image.png' %}{% endif %}"
+                                alt="[X]">
+                </div>
+                <div class="col-8">
+                    <h4>{{ product.title }}</h4>
+                    <h4>{{ product.description }}</h4>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="img-form inline">
+                     {% for image in product_images %}
+                        <div class="col-8">
+                            <img class="img-thumbnail" id="foto-{{ forloop.counter0 }}"
+                                 src="{% if image.image %}{{ image.image.url }}
+                                {% else %}{% static '/img/no-image.png' %}{% endif %}">
+                        </div>
+                     {% endfor %}
+                 </div>
+            </div>
+        </div>
+        <div>
+            <h5>Системная информация:</h5>
+            <p>Автор: {{ product.createdBy }}</p>
+            <p>Дата: {{ product.createdOn }}</p>
+            <p>Актив: {{ product.isActive }}</p>
+        </div>
+        <div>
+            <a href="{% url 'product_edit' product.slug %}" class="btn btn-outline-success">Изменить</a>
+        </div>
+    </div>
+{% endblock %}

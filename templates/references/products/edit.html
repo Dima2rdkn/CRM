@@ -1,7 +1,58 @@
 {% extends "onepage.html" %}
 {% load static %}
 {% block title %}
-    Цветы Мамайка - Клиенты
+    Цветы Мамайка - Товары
+{% endblock %}
+{% block HeaderScript %}
+    <link  href="/static/js/cropper/dist/cropper.css" rel="stylesheet">
+    <script src="/static/js/cropper/dist/cropper.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        function deleteForm(idxForm) {
+            let chkDelete = document.getElementById('id_productimages_set-'+idxForm+'-DELETE');
+            let btnDelete = document.getElementById('btn-delete-'+idxForm);
+            let imgDelete = document.getElementById('foto-'+idxForm);
+            if (chkDelete != null){
+                if (chkDelete.checked) {
+                    chkDelete.checked = false;
+                    btnDelete.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+                    imgDelete.style.opacity = 1;
+                } else {
+                    chkDelete.checked = true;
+                    btnDelete.innerHTML = '<i class="fa-solid fa-trash-arrow-up"></i> ';
+                    imgDelete.style.opacity = 0.2;
+                }
+            }
+        }
+
+        function cleanPrimary() {
+            // Сбросим все установленные флажки и кнопки
+            btnsPrimary = document.querySelectorAll('.set-primary');
+            btnsPrimary.forEach((btnPrimary) => {
+                btnPrimary.innerHTML = '<i class="fa-regular fa-heart"></i>';
+            });
+            chksPrimary = document.querySelectorAll('.chk-primary');
+            chksPrimary.forEach((chkPrimary) => {
+                chkPrimary.checked = false;
+            });
+        }
+
+        function setPrimary(idxForm) {
+            // Установим нужную кнопку и флажок на выбранном изображении
+            let chkPrimary = document.getElementById('id_productimages_set-'+idxForm+'-primary');
+            let btnPrimary = document.getElementById('btn-heart-'+idxForm);
+            if (chkPrimary != null){
+                if (chkPrimary.checked) {
+                    chkPrimary.checked = false;
+                    btnPrimary.innerHTML = '<i class="fa-regular fa-heart"></i>';
+                } else {
+                    cleanPrimary();
+                    chkPrimary.checked = true;
+                    btnPrimary.innerHTML = '<i class="fas fa-heart"></i>';
+                }
+            }
+        }
+    </script>
 {% endblock %}
 {% block subheader %}
      <span class="inline">
@@ -16,17 +67,88 @@
         <div class="row">
             <h5>Товар/Услуга:</h5>
         </div>
-        <form method="post" enctype="multipart/form-data">
+        <form id= "product-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_form_errors }}
             {{ form.errors }}
-            {{ form.as_p }}
-            <h5 class="text-info">Добавьте изображения</h5>
-            {{ image_formset.non_form_errors }}
-            {{ image_formset.management_form }}
-            {% for fm in image_formset %}
-                {{ fm }}<br>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.category.label}}
+                </div>
+                <div class="col">
+                    {{ form.category }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.title.label}}
+                </div>
+                <div class="col">
+                    {{ form.title }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.description.label }}
+                </div>
+                <div class="col">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.article.label}}
+                </div>
+                <div class="col">
+                    {{ form.article }}
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-2">
+                    {{ form.slug.label}}
+                </div>
+                <div class="col">
+                    {{ form.slug }}
+                </div>
+            </div>
+            <h5> Изображения товара:</h5>
+            {{image_formset.management_form}}
+            {% for imgform in image_formset %}
+                <div class="img-form inline">
+                    <div class="hover-effect-cover">
+                        {{ imgform.id }}
+                        <input type="file" name="productimages_set-{{ forloop.counter0 }}-image"
+                               accept="image/*" id="id_productimages_set-{{ forloop.counter0 }}-image" hidden>
+                        <label for="id_productimages_set-{{ forloop.counter0 }}-image">
+                            <img class="img-thumbnail" id="foto-{{ forloop.counter0 }}"
+                                 src="{% if imgform.instance.image %}{{ imgform.instance.image.url }}
+                                    {% else %}{% static '/img/no-image.png' %}{% endif %}">
+				        </label>
+                        <div class="effect-to-top">
+                                <button type="button" class="btn btn-danger btn-sm btn-heart set-primary"
+                                        id="btn-heart-{{ forloop.counter0 }}"
+                                        onclick="setPrimary({{ forloop.counter0 }})">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm btn-delimg"
+                                        id="btn-delete-{{ forloop.counter0 }}"
+                                        onclick="deleteForm({{ forloop.counter0 }})">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                        </div>
+                    </div>
+                    <input class="chk-primary" type="checkbox" name="productimages_set-{{ forloop.counter0 }}-primary"
+                           id="id_productimages_set-{{ forloop.counter0 }}-primary"
+                           {% if imgform.instance.primary %} checked {% endif %} hidden>
+                    <input type="checkbox" name="productimages_set-{{ forloop.counter0 }}-DELETE"
+                           id="id_productimages_set-{{ forloop.counter0 }}-DELETE" hidden>
+                </div>
             {% endfor %}
+            <div class="row" id="add-imgform">
+            </div>
+            <button id="add-imgform-button" type="button" class="btn btn-primary">
+                 Добавить фото
+            </button>
             <div class="row">
                 <div class="col">
                     <button class="btn btn-outline-success" type="submit">Сохранить</button>
@@ -34,7 +156,65 @@
             </div>
         </form>
     </div>
-    <script> document.getElementById('avatar').addEventListener('change', showFile, false);
-    </script>
+    <script>
+
+        // Все что понаписано внизу требует оптимизации, возможно вернусь сюда позже,
+        // Хотя, как показывает опыт нифига не вернусь :)
+
+        let imgForm = document.querySelectorAll(".img-form");
+        let mainForm = document.querySelector("#product-form");
+        let addButton = document.querySelector("#add-imgform-button");
+        let NewPlace = document.querySelector("#add-imgform");
+        let totalForms = document.querySelector("#id_productimages_set-TOTAL_FORMS");
+        let maxNumForms = document.querySelector("#id_productimages_set-MAX_NUM_FORMS");
+        let maximumForms=maxNumForms.getAttribute('value');
+
+        let imgFormNum = imgForm.length-1;
+        addButton.addEventListener('click', addForm);
+        // Следующую команду нужно закинуть в цикл по количеству загруженных фото (цикл for imgform in image_formset)
+        for (var i = 0; i<=imgFormNum; i++) {
+	        document.getElementById('id_productimages_set-'+i+'-image').addEventListener('change',
+                showFile.bind(null,'foto-'+i));
+            chkPrimary=document.getElementById('id_productimages_set-'+i+'-primary')
+            btnPrimary = document.getElementById('btn-heart-'+i);
+            if (chkPrimary != null){
+                if (chkPrimary.checked) {
+                    btnPrimary.innerHTML = '<i class="fas fa-heart"></i>';
+                }
+            }
+	    }
+
+        function addForm(e) {
+            e.preventDefault();
+            if ((imgFormNum+1)<maximumForms){
+                let newForm = imgForm[0].cloneNode(true);
+                //let imgRegex = RegExp(`foto-(\\d){1}`,'g'); //Regex to find all instances of the img number
+                //let formRegex = RegExp(`productimages_set-(\\d){1}-`,'g'); //Regex to find all instances of the form number
+                imgFormNum++; //Increment the form number
+                //newForm.innerHTML = newForm.innerHTML.replace(formRegex, `productimages_set-${imgFormNum}-`);
+                //newForm.innerHTML = newForm.innerHTML.replace(imgRegex, `foto-${imgFormNum}`)
+                newForm.innerHTML = newForm.innerHTML.replaceAll('-0', '-'+imgFormNum);
+                newForm.innerHTML = newForm.innerHTML.replaceAll('(0', '('+imgFormNum);
+                mainForm.insertBefore(newForm, NewPlace); //Insert the new form at the end of the list of forms
+
+                totalForms.setAttribute('value', `${imgFormNum+1}`);
+                sfoto = "foto-"+imgFormNum;
+                imgDOM = document.getElementById(sfoto);
+                imgDOM.src = "{% static '/img/no-image.png' %}";
+                imgDOM.style.opacity = 1;
+                sprefix = "id_productimages_set-"+imgFormNum;
+                inputDOM = document.getElementById(sprefix+"-image");
+                inputDOM.addEventListener('change',showFile.bind(null,sfoto));
+                inputDOM = document.getElementById(sprefix+"-primary");
+                inputDOM.checked = false;
+                btnPrimary = document.getElementById('btn-heart-'+imgFormNum);
+                btnPrimary.innerHTML = '<i class="fa-regular fa-heart"></i> ';
+                inputDOM = document.getElementById(sprefix+"-DELETE");
+                inputDOM.checked = false;
+                btnDelete = document.getElementById('btn-delete-'+imgFormNum);
+                btnDelete.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+            }
+        }
+	</script>
 {% endblock %}
 
