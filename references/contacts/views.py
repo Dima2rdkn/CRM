@@ -1,5 +1,7 @@
 import vobject
 import base64
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.core.files.base import ContentFile
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -9,6 +11,7 @@ from django.db.models import Q
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+
 
 class GroupUpdateView(LoginRequiredMixin, UpdateView):
     model = ContactGroup
@@ -55,11 +58,22 @@ class ContactUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.isActive = True
         return super().form_valid(form)
 
+
 # НАДО ПЕРЕДЕЛАТЬ НА УСТАНОВКУ ФЛАГА ISACTIVE в FALSE
 class ContactDeleteView(LoginRequiredMixin, DeleteView):
     model = Contact
     template_name = 'references/contacts/edit.html'
 
+    def get_success_url(self):
+        return reverse('contacts')
+
+    def form_valid(self, form):
+        obj = self.get_object()
+        obj.isActive = False
+        obj.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+# НАДО ПЕРЕДЕЛАТЬ НА LISTVIEW
 @login_required
 def contacts_list(request, group_id=None):
     sfilter = request.GET.get('Filter')     # Проверяем параметр "Filter" из GET параметра
@@ -68,18 +82,20 @@ def contacts_list(request, group_id=None):
     if group_id:
         group = get_object_or_404(ContactGroup, pk=group_id)
         groups = ContactGroup.objects.filter(parent=group)
-        contacts = Contact.objects.filter(
+        contacts = Contact.objects.filter(isActive=True)
+        contacts = contacts.filter(
             Q(first_name__icontains=sfilter) |
             Q(last_name__icontains=sfilter) |
             Q(phone__icontains=sfilter) |
             Q(phone2__icontains=sfilter) |
             Q(address__icontains=sfilter) |
             Q(category=groups)
-                                          )
+        )
     else:
         group = None
         groups = ContactGroup.objects.all()
-        contacts = Contact.objects.filter(
+        contacts = Contact.objects.filter(isActive=True)
+        contacts = contacts.filter(
             Q(first_name__icontains=sfilter) |
             Q(last_name__icontains=sfilter) |
             Q(phone__icontains=sfilter) |

@@ -40,11 +40,11 @@ class ProductList(LoginRequiredMixin, ListView):
         context = super(ProductList, self).get_context_data(**kwargs)
         if ('slug' in self.kwargs) and (self.kwargs['slug']):
             selected = Categories.get_list(slug=self.kwargs['slug'])
-            context['products'] = Products.get_list(category=selected)
+            context['products'] = Products.get_list_image(category=selected)
             context['group'] = selected
         else:
             context['group'] = ""
-            context['products'] = Products.get_list()
+            context['products'] = Products.get_list_image()
         category = Categories.get_list()
         context['category'] = category
 

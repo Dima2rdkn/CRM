@@ -57,11 +57,22 @@ class Products(models.Model):
             self.slug = slugify(self.title)
         super(Products, self).save(*args, **kwargs)
 
+    def get_query_set(self):
+        return super(Products, self).get_query_set().exclude(isActive=False)
+
     @staticmethod
     def get_list(**kwargs):
         product_list = Products.objects.filter(isActive=True).order_by('title')
         if ('category' in kwargs) and (kwargs['category']):
             product_list = product_list.filter(category=kwargs['category'])
+        return product_list
+
+    @staticmethod
+    def get_list_image(**kwargs):
+        product_list = Products.get_list(**kwargs)
+        for prod in product_list:
+            img = ProductImages.objects.filter(product=prod, primary=True).first()
+            prod.image = img.image
         return product_list
 
     def get_absolute_url(self):

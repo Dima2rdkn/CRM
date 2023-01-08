@@ -55,6 +55,16 @@ class Contact(models.Model):
     createdOn = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     isActive = models.BooleanField(default=True)
 
+    @staticmethod
+    def get_list(**kwargs):
+        clients_list = Contact.objects.filter(isActive=True).order_by('last_name')
+        if ('category' in kwargs) and (kwargs['category']):
+            clients_list = clients_list.filter(category=kwargs['category'])
+        return clients_list
+
+    def get_query_set(self):
+        return super(Contact, self).get_query_set().exclude(isActive=False)
+
     def __str__(self):
         return self.last_name + ' ' + self.first_name
 

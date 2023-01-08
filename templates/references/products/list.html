@@ -3,7 +3,7 @@
 {% load tree %}
 {% block title %} Цветы Мамайка - Товары и услуги {% endblock %}
 {% block subheader %}
-    <span class="inline">
+<span class="inline" xmlns="http://www.w3.org/1999/html">
         <h5> Справочник Товары и услуги </h5>
     </span>
     <p class="separator"></p>
@@ -30,7 +30,14 @@
         {% for prod in products %}
             <div class="row">
                 <div class="col">
+                    <img class="img-avatar" src="{% if prod.image %}{{ prod.image.url }}
+                    {% else %}{% static '/img/no-image.png' %}{% endif %}">
+                </div>
+                <div class="col">
                     <a href= "{{ prod.get_absolute_url }}">{{ prod }}</a>
+                </div>
+                <div class="col">
+                    <p> {{ prod.article }} </p>
                 </div>
             </div>
         {% endfor %}
