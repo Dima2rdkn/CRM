@@ -21,11 +21,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
+    path('', include('main.urls')),
     path('admin-site/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('main.urls')),
-    path('main/', include('main.urls')),
-    path('admin/', include('references.urls')),
 ]
 if settings.DEBUG:
     if settings.MEDIA_ROOT:

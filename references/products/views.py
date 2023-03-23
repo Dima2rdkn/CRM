@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse
-from references.products.models import Categories, Products, ProductImages, Specifications, Feedback
+from references.products.models import Categories, Products, ProductImages, \
+    Specifications, Feedback
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CatEditForm, ProductEditForm, ImageFormSet
@@ -59,7 +60,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
-        images=ProductImages.objects.all().filter(product=self.object)
+        images = ProductImages.objects.all().filter(product=self.object)
         context['product_images'] = images
         context['primary_image'] = images.filter(primary=True).first()
         # context['products_search'] = searched_products(self.request.GET.get('q'), category)
@@ -130,7 +131,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        form=self.get_form(form_class)
+        form = self.get_form(form_class)
         image_formset = ImageFormSet(self.request.POST, self.request.FILES, instance=self.object)
         if form.is_valid() and image_formset.is_valid():
             return self.form_valid(form, image_formset)
@@ -149,4 +150,3 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def form_invalid(self, form, image_formset):
         return self.render_to_response(
             self.get_context_data(form=form, image_formset=image_formset))
-

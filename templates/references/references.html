@@ -6,16 +6,16 @@
 {% block vnavbar %}
     <ul>
         <li>
-            <a href="{% url 'main' %}" ><i class="fa-solid fa-house"></i> Главная</a>
+            <a href="{% url 'admin' %}" ><i class="fa-solid fa-house"></i> Главная</a>
         </li>
         <li>
-            <a href="{% url 'contacts' %}"><i class="fa-solid fa-address-card"></i> Клиенты</a>
+            <a href="{% url 'contacts_list' %}"><i class="fa-solid fa-address-card"></i> Клиенты</a>
         </li>
         <li>
             <a href="{% url 'products_list' %}"><i class="fa-solid fa-basket-shopping"></i></i> Товары и услуги</a>
         </li>
         <li>
-            <a href="{% url 'suppliers' %}"><i class="fa-solid fa-truck"></i> Поставщики</a>
+            <a href="{% url 'suppliers_list' %}"><i class="fa-solid fa-truck"></i> Поставщики</a>
         </li>
         <li>
             <a href="{% url 'measure_list' %}"><i class="fa-solid fa-scale-balanced"></i> Единицы измерения</a>
@@ -25,5 +25,4 @@
         </li>
     </ul>
 {% endblock %}
-
 

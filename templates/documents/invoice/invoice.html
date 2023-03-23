@@ -1,0 +1,95 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %}
+    Цветы Мамайка - Накладная
+{% endblock %}
+{% block subheader %}
+     <span class="inline">
+        <h5> Накладная </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'invoices' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <h5>Накладная:</h5>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.errors }}
+            <div class="row">
+                <div class="col-2">
+                    {{ form.docNum.label}}
+                </div>
+                <div class="col-2">
+                    {{ form.docNum }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.docDate.label}}
+                </div>
+                <div class="col"-2>
+                    {{ form.docDate }}
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-2">
+                        {{ form.supplier.label}}
+                    </div>
+                    <div class="col-2">
+                        {{ form.supplier}}
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    {{ form.store.label }}
+                </div>
+                <div class="col-2">
+                    {{ form.store }}
+                </div>
+            </div>
+            <hr align="left" width="100%" size="4" />
+            <div class="row">
+                <div class="col-2 inputbox" >
+                    Товар
+                </div>
+                <div class="col-1 inputbox">
+                    Кол-во
+                </div>
+                <div class="col-1 inputbox">
+                    ед.изм.
+                </div>
+                <div class="col-1 inputbox">
+                    Цена
+                </div>
+            </div>
+            {{invoice_formset.management_form}}
+            {% for tabform in invoice_formset %}
+                <div class="row">
+                    <div class="col-2">
+                        {{ tabform.product }}
+                    </div>
+                    <div class="col-1">
+                        {{ tabform.quantity }}
+                    </div>
+                    <div class="col-1">
+                        {{ tabform.mt }}
+                    </div>
+                    <div class="col-1">
+                        {{ tabform.price }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-outline-success" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+

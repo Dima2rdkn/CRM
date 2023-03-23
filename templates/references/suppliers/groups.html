@@ -2,18 +2,18 @@
 {% block subheader %}
     <h5 class="inline"> Справочник Клиенты </h5>
     <p class="separator"></p>
-    <a href="{% url 'contact_groups_new' %}" class="btn-view">Добавить</a>
+    <a href="{% url 'suppliers_groups_new' %}" class="btn-view">Добавить</a>
     <p class="separator"></p>
-    <a href="{% url 'contacts' %}" class="btn-view">Закрыть</a>
+    <a href="{% url 'suppliers_list' %}" class="btn-view">Закрыть</a>
 {% endblock %}
 {% block main %}
     {% for el in groups %}
         <div class="alert tablegroups">
             <h5>{% if el.parent%} {{ el.parent }}/ {% endif %}{{ el.title}}</h5>
             <p>{{el.description}}</p>
-            <a href="{% url 'contact_group_edit' el.id %}" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{% url 'suppliers_groups_edit' el.id %}" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
             <p class ="separator"></p>
-            <a href="{% url 'contact_group_delete' el.id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+            <a href="{% url 'suppliers_group_delete' el.id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
         </div>
     {%endfor%}
 {% endblock %}

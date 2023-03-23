@@ -50,6 +50,13 @@ class Supplier(models.Model):
         verbose_name = 'Поставщик'
         verbose_name_plural = 'Поставщик'
 
+    @staticmethod
+    def get_list(**kwargs):
+        supplier_list = Supplier.objects.filter(isActive=True).order_by('name')
+        if ('category' in kwargs) and (kwargs['category']):
+            supplier_list = supplier_list.filter(category=kwargs['category'])
+        return supplier_list
+
     def get_absolute_url(self):
         return reverse('supplier_detail', args=[self.id])
 

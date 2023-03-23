@@ -1,13 +1,16 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Categories, Products, ProductImages, Specifications, Feedback
+from .models import Categories, Products, ProductImages, Specifications, Feedback, Measure, \
+    Supplier, Stores
+from datetime import datetime
+
 
 class CatEditForm(forms.ModelForm):
     class Meta:
         model = Categories
         fields = ['name', 'parent', 'slug', 'image']
 
-    parent = forms.ModelChoiceField(label='Группа:',  required=False, queryset=Categories.objects.all())
+    parent = forms.ModelChoiceField(label='Группа:', required=False, queryset=Categories.objects.all())
     image = forms.ImageField(label='Картинка:', required=False,
                              widget=forms.ClearableFileInput(attrs={'id': 'avatar'}))
     name = forms.CharField(label='Категория:', widget=forms.TextInput(attrs={'placeholder': 'Категория'}),
@@ -24,20 +27,23 @@ class ImageEditForm(forms.ModelForm):
                                  widget=forms.ClearableFileInput(attrs={'id': 'photo'}))
         primary = forms.BooleanField(label='Основное', required='False')
 
+
 class ProductEditForm(forms.ModelForm):
     class Meta:
         model = Products
         exclude = ('createdBy', 'createdOn', 'isActive')
+
     category = forms.ModelChoiceField(label='Категория:', queryset=Categories.objects.all())
     title = forms.CharField(label='Наименование:',
                             widget=forms.TextInput(attrs={'placeholder': 'Наименование', 'size': 50}),
-                            required=True, max_length=255,)
+                            required=True, max_length=255, )
     description = forms.CharField(label='Описание:', required=False,
                                   widget=forms.Textarea(attrs={'rows': '3', 'placeholder': 'Описание', 'cols': 52}))
     article = forms.CharField(label='Артикул:', widget=forms.TextInput(attrs={'placeholder': 'Артикул', 'size': 50}),
                               required=False, max_length=16)
     slug = forms.CharField(label='URL:', widget=forms.TextInput(attrs={'placeholder': 'URL', 'size': 50}),
                            required=True, max_length=255)
+
 
 ImageFormSet = inlineformset_factory(
     Products,
@@ -53,4 +59,4 @@ ImageFormSet = inlineformset_factory(
     # widgets=None, validate_max=False, localized_fields=None,
     # labels=None, help_texts=None, error_messages=None,
     # min_num=None, validate_min=False, field_classes=None
-    )
+)

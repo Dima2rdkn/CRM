@@ -2,7 +2,7 @@ from django.urls import path
 from . import views as suppliers_views
 
 urlpatterns = [
-     path('', suppliers_views.suppliers_list, name='suppliers'),
+     path('', suppliers_views.suppliers_list, name='suppliers_list'),
      path('group/<int:group_id>/', suppliers_views.suppliers_list,
           name='suppliers_list_by_group'),
      path('groups/', suppliers_views.suppliers_groups, name='suppliers_groups_edit'),

@@ -1,0 +1,23 @@
+{% extends "onepage.html" %}
+{% block title %} Администрирование :: Цветы Мамайка {% endblock %}
+{% block subheader %}
+    <h4>Администрирование</h4>
+{% endblock %}
+{% block main %}
+    {% if request.user.is_authenticated %}
+        <ul>
+            <li>
+                <a href="{% url 'references' %}" ><i class="fa-solid fa-house"></i> Справочники</a>
+            </li>
+            <li>
+                <a href="{% url 'documents' %}"><i class="fa-solid fa-address-card"></i> Документы</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}"><i class="fa-solid fa-basket-shopping"></i></i> Выход</a>
+            </li>
+            <li>
+                <a href="{% url 'admin' %}"><i class="fa-solid fa-truck"></i> Отчеты</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}

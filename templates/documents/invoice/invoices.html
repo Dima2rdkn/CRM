@@ -1,0 +1,55 @@
+{% extends "onepage.html" %}
+{% load static %}
+{% block title %} Цветы Мамайка - Накладные {% endblock %}
+{% block subheader %}
+	<span class="tools-item">
+        <h5> Документы Накладные </h5>
+    </span>
+    <p class="separator"></p>
+    <a href="{% url 'invoice_new' %}" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-plus"></i> Добавить</a>
+    <p class="separator"></p>
+    <div class="tools-item inputbox">
+        <form id="filterForm" method="get">
+            <input id="filter" type="text" tabindex="1" value="" name="Filter" placeholder="Фильтр + поиск" autocomplete="off">
+            <span class="tools-item">
+                <a href="#" onclick="document.getElementById('filterForm').submit()"><i class="fa-solid fa-magnifying-glass"></i></a>
+            </span>
+            <span class="inline">
+                <a href="#" onclick='document.getElementById("filter").value="";
+                document.getElementById("filterForm").submit()'><i class="fa-solid fa-xmark"></i></a>
+            </span>
+        </form>
+    </div>
+    <p class="separator"></p>
+    <a href="{% url 'documents' %}" class="btn btn-outline-success btn-sm">Закрыть</a>
+
+
+{% endblock %}
+{% block main %}
+    <table class="container table table-striped">
+        <thead>
+            <tr class="row">
+                <th class="col-2" scope="col"> Дата </th>
+                <th class="col-1" scope="col"> Номер </th>
+                <th class="col-4" scope="col"> Поставщик </th>
+                <th class="col-2" scope="col"> Склад </th>
+                <th class="col-1" scope="col"> Сумма </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for el in invoice %}
+                <tr class="row">
+                    <td class="col-2">{{ el.docDate }}</td>
+                    <td class="col-1">
+                        <a href= "{{ el.get_absolute_url }}">
+                            {{ el.docNum }}
+                        </a>
+                    </td>
+                    <td class="col-4"> {{ el.supplier }} </td>
+                    <td class="col-2">{{ el.store }}</td>
+                    <td class="col-1">{{ el.summa }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

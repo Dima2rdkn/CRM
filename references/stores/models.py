@@ -9,6 +9,10 @@ class Stores(models.Model):
     def __str__(self):
         return self.name
 
+    @staticmethod
+    def get_list(**kwargs):
+        return Stores.objects.all().order_by('name')
+
     def get_absolute_url(self):
         return reverse('store_detail', args=[self.slug])
 

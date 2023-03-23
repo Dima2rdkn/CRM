@@ -8,39 +8,38 @@
 {% endblock %}
 
 {% block main %}
-    <div class="div-center">
-        <div>
-            <div class="row">
-                <div class="col-8">
+    <div class="container px-4">
+        <div class="row gx-5">
+            <div class="col">
+                <div class="p-3">
                     <img class="img-preview" src="{% if primary_image.image %}{{ primary_image.image.url }}
-                                {% else %}{% static '/img/no-image.png' %}{% endif %}"
-                                alt="[X]">
+                            {% else %}{% static '/img/no-image.png' %}{% endif %}"
+                            alt="[X]">
                 </div>
-                <div class="col-8">
-                    <h4>{{ product.title }}</h4>
-                    <h4>{{ product.description }}</h4>
+                <div class="row">
+                    <div class="col">
+                       <div class="p-3"><h5>Галерея:</h5></div>
+                    </div>
+                    <div class="img-form inline">
+                        {% for image in product_images %}
+                                <img class="img-gallery" id="foto-{{ forloop.counter0 }}"
+                                     src="{% if image.image %}{{ image.image.url }}
+                                    {% else %}{% static '/img/no-image.png' %}{% endif %}">
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                 <div class="img-form inline">
-                     {% for image in product_images %}
-                        <div class="col-8">
-                            <img class="img-thumbnail" id="foto-{{ forloop.counter0 }}"
-                                 src="{% if image.image %}{{ image.image.url }}
-                                {% else %}{% static '/img/no-image.png' %}{% endif %}">
-                        </div>
-                     {% endfor %}
-                 </div>
+            <div class="col">
+                <div class="p-3"><h4>{{ product.title }}</h4>
+                </div>
+                <div class="p-3"><h4>{{ product.description }}</h4>
+                </div>
             </div>
         </div>
-        <div>
-            <h5>Системная информация:</h5>
-            <p>Автор: {{ product.createdBy }}</p>
-            <p>Дата: {{ product.createdOn }}</p>
-            <p>Актив: {{ product.isActive }}</p>
-        </div>
-        <div>
-            <a href="{% url 'product_edit' product.slug %}" class="btn btn-outline-success">Изменить</a>
+        <div class="row gx-5">
+            <div class="p-3">
+                <a href="{% url 'product_edit' product.slug %}" class="btn btn-outline-success">Изменить</a>
+            </div>
         </div>
     </div>
 {% endblock %}

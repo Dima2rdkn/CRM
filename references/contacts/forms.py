@@ -19,7 +19,7 @@ class ContactEditForm(forms.ModelForm):
                                  required=True, max_length=100)
     last_name = forms.CharField(label='Фамилия:', widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}),
                                 required=False, max_length=200)
-    email = forms.EmailField(label='Почта:', widget=forms.TextInput(attrs={'placeholder': 'name@domain.ru'}),
+    email = forms.EmailField(label='Почта:', widget=forms.EmailInput(attrs={'placeholder': 'name@domain.ru'}),
                              required=False)
     phone = forms.CharField(label='Телефон:', widget=forms.TextInput(attrs={'placeholder': '+79999999999'}))
     phone2 = forms.CharField(label='Телефон доп:', widget=forms.TextInput(attrs={'placeholder': '+79999999999'}),

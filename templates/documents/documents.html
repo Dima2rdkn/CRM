@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% block title %} Цветы Мамайка - Справочники {% endblock %}
+{% block subheader %}
+    <h5> Документы </h5>
+{% endblock %}
+{% block vnavbar %}
+    <ul>
+        <li>
+            <a href="{% url 'admin' %}" ><i class="fa-solid fa-house"></i> Главная</a>
+        </li>
+        <li>
+            <a href="{% url 'invoices' %}"><i class="fa-solid fa-address-card"></i> Накладные</a>
+        </li>
+    </ul>
+{% endblock %}
+
+

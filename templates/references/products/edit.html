@@ -120,7 +120,7 @@
                         <input type="file" name="productimages_set-{{ forloop.counter0 }}-image"
                                accept="image/*" id="id_productimages_set-{{ forloop.counter0 }}-image" hidden>
                         <label for="id_productimages_set-{{ forloop.counter0 }}-image">
-                            <img class="img-thumbnail" id="foto-{{ forloop.counter0 }}"
+                            <img class="img-preview" id="foto-{{ forloop.counter0 }}"
                                  src="{% if imgform.instance.image %}{{ imgform.instance.image.url }}
                                     {% else %}{% static '/img/no-image.png' %}{% endif %}">
 				        </label>

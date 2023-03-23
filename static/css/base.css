@@ -140,19 +140,16 @@ footer p {
     color: #12c064;
 }
 
-.img-avatar
-{
-height: 50px;
+.img-avatar{
+    height: 50px;
 }
 
-.img-thumbnail
-{
-width: 200px;
+.img-gallery{
+    width: 100px;
 }
-
 .img-preview
 {
-width: 200px;
+    width: 200px;
 }
 
 .form-type1{
@@ -171,11 +168,8 @@ width: 200px;
 
 .div-center{
     border: 1px solid #579a00;
-    float:left;
-    margin:20px;
-    clear:both;
-    width:500px;
-    text-align:center;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .hover-effect-cover {
