@@ -38,7 +38,7 @@ class Invoice(models.Model):
         return summa_doc
 
     def __str__(self):
-        return "Накладная"+self.docNum+" от "+self.docDate
+        return "Накладная №"+self.docNum+" от "+self.docDate.strftime("%m/%d/%Y")
 
     def get_absolute_url(self):
         return reverse('invoice_edit', args=[self.id])
@@ -50,7 +50,7 @@ class Invoice(models.Model):
 
 class InvoiceTable(models.Model):
     docptr = models.ForeignKey(Invoice, verbose_name='Накладная', on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, verbose_name='Товар', on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, verbose_name='Товар', on_delete=models.PROTECT)
     quantity = models.FloatField(verbose_name='Количество')
     mt = models.ForeignKey(Measure, verbose_name='ед. изм.', on_delete=models.PROTECT)
     price = models.FloatField(verbose_name='Цена')

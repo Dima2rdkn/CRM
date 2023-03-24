@@ -13,7 +13,7 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
     object = None
 
     def get_context_data(self, **kwargs):
-        context = super(InvoiceCreateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['invoice_formset'] = InvoiceFormSet(self.request.POST, instance=self.object)
         else:
@@ -32,9 +32,9 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form, invoice_formset):
         form.instance.createdBy = self.request.user
         form.instance.isActive = True
-        self.object = form.save()
+        result = form.save()
         # saving invoice_formset
-        invoice_formset.instance = self.object
+        invoice_formset.instance = result
         invoice_formset.save()
         return redirect("invoices")
 
@@ -48,20 +48,20 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     form_class = InvoiceEditForm
     template_name = 'documents/invoice/invoice.html'
     context_object_name = 'invoice'
-    object = None
 
     def get_context_data(self, **kwargs):
-        context = super(InvoiceUpdateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['invoice_formset'] = InvoiceFormSet(self.request.POST, instance=self.object)
+            context['invoice_formset'] = InvoiceFormSet(self.request.POST)
         else:
-            context['invoice_formset'] = InvoiceFormSet(instance=self.object)
+            context['invoice_formset'] = InvoiceFormSet(instance=self.get_object())
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        invoice_formset = InvoiceFormSet(self.request.POST)
+        invoice_formset = InvoiceFormSet(self.request.POST, instance=self.object)
         if form.is_valid() and invoice_formset.is_valid():
             return self.form_valid(form, invoice_formset)
         else:
@@ -70,15 +70,16 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form, invoice_formset):
         form.instance.createdBy = self.request.user
         form.instance.isActive = True
-        self.object = form.save()
+        result = form.save()
         # saving invoice_formset
-        invoice_formset.instance = self.object
+        invoice_formset.instance = result
         invoice_formset.save()
+#        return super().form_valid(form)
         return redirect("invoices")
 
     def form_invalid(self, form, invoice_formset):
         return self.render_to_response(
-            self.get_context_data(form=form, image_formset=invoice_formset))
+            self.get_context_data(form=form, invoice_formset=invoice_formset))
 
 
 class InvoiceListView(LoginRequiredMixin, ListView):
