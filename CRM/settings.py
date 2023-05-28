@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import config
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 PRJ_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -21,7 +23,7 @@ PRJ_DIR = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!fc$_ty8qrhb(pdj_3-zwkrvtm^to4y20*mur_hzn1v#u@3^m+'
+SECRET_KEY = config.DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -62,7 +64,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'CRM.urls'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
