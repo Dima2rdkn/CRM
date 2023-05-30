@@ -1,8 +1,12 @@
 {% extends "onepage.html" %}
-
+{% load static %}
 {% block title %}Выход{% endblock %}
 
 {% block main %}
-    <h1>Выход</h1>
-    <p>Вы успешно вышли! <a href="{% url "login" %}">войти снова</a>.</p>
+    <div class="mf-warning-wrap">
+        <div class="mf-warning-img">
+            <img src='{% static "/img/thanks.jpg" %}'>
+        </div>
+        <p>Заходите ещё! <a href="{% url "login" %}">войти снова</a>.</p>
+    </div>
 {% endblock %}

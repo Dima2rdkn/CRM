@@ -38,7 +38,7 @@ class Invoice(models.Model):
         return summa_doc
 
     def __str__(self):
-        return "Накладная №"+self.docNum+" от "+self.docDate.strftime("%m/%d/%Y")
+        return "Накладная № %s от %s" % (self.docNum, self.docDate.strftime("%m/%d/%Y"))
 
     def get_absolute_url(self):
         return reverse('invoice_edit', args=[self.id])

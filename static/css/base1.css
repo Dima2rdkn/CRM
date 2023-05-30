@@ -1,0 +1,110 @@
+/* SETUP */
+body{
+ background-color: #f7f7f7;
+}
+
+.wrapper{
+    width: 1170px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* HEADER */
+header{
+    background-color: #1f75a8;
+    margin-bottom: 16px;
+}
+
+.mf-header-wrap{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.mf-header-textlogo {
+    font-weight: bold;
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mf-header-textlogo a{
+    color: white;
+    text-decoration: none;
+}
+
+.mf-header-user{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+}
+
+.mf-header-user a{
+    color: #c6ddea;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.mf-nav{
+    display: flex;
+}
+
+/* FOOTER */
+footer{
+    background-color: #f7f7f7;
+    color: #f7f7f7;
+}
+.copyright{
+    font: italic 1.2em "Fira Sans", serif;
+}
+
+/* Допы для картинок*/
+.hover-effect-cover {
+    position: relative;
+}
+
+.hover-effect-cover:hover .btn-delimg{
+    opacity: 1;
+    transition: opacity .3s;
+}
+.hover-effect-cover:hover .btn-heart{
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.btn-delimg{
+    opacity: 0;
+    position: absolute;
+    top: calc(100% - 40px);
+    left: calc(100% - 40px);
+    background: rgba(0, 0, 0, .3);
+    color:#fff;
+    transition: opacity .3s;
+}
+.btn-heart{
+    opacity: 0;
+    position: absolute;
+    top: calc(100% - 40px);
+    left: 10px;
+    background: rgba(0, 0, 0, .3);
+    color:#fff;
+    transition: opacity .3s;
+}
+
+.mf-warning-wrap{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+}
+.mf-warning-img{
+    width: 300px;
+}
